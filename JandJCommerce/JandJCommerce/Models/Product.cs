@@ -13,5 +13,19 @@ namespace JandJCommerce.Models
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public Category Category { get; set; }
+    }
+
+    public enum Category
+    {
+        Chairs,
+        Beds,
+        Couches,
+        Dressers,
+        Shelves,
+        Tables,
+        Cabinets,
+        Desks,
+        Other
     }
 }

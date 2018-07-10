@@ -29,7 +29,7 @@ namespace JandJCommerce
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CommerceDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
 
             services.AddScoped<IInventory, DevIInventory>();

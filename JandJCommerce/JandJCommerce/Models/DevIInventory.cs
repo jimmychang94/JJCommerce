@@ -12,38 +12,72 @@ namespace JandJCommerce.Models
 {
     public class DevIInventory : IInventory
     {
-        private DbContext _context;
+        private CommerceDbContext _context { get; }
         private readonly IConfiguration Configuration;
 
-        public DevIInventory(DbContext context, IConfiguration configuration)
+        public DevIInventory(CommerceDbContext context, IConfiguration configuration)
         {
             _context = context;
             Configuration = configuration;
         }
 
-        public Task<IActionResult> CreateProduct(Product product)
+        public async Task<string> CreateProduct(Product product)
         {
-            throw new NotImplementedException();
+            var result = await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
+            if (result != null)
+            {
+                return "Product Created";
+            }
+            return "Product Not Created";
         }
 
-        public Task<IActionResult> DeleteProduct(int id)
+        public async Task<string> DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            Product product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return "Product Not Found";
+            }
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return "Product Removed";
         }
 
-        public Task<IActionResult> GetProductById(int id)
+        public Task<Product> GetProductById(int id)
         {
-            throw new NotImplementedException();
+            var product = _context.Products.FirstOrDefaultAsync(p => p.ID == id);
+            return product;
         }
 
-        public Task<IActionResult> GetProducts()
+        public async Task<List<Product>> GetProducts()
         {
-            throw new NotImplementedException();
+            List<Product> products = await _context.Products.ToListAsync();
+            return products;
         }
 
-        public Task<IActionResult> UpdateProduct(int id, Product product)
+        public async Task<string> UpdateProduct(int id, Product product)
         {
-            throw new NotImplementedException();
+            Product result = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
+
+            if (result == null)
+            {
+                return "Product Not Found";
+            }
+
+            result.Category = product.Category;
+            result.Description = product.Description;
+            result.Image = product.Image;
+            result.Name = product.Name;
+            result.Price = product.Price;
+            result.Sku = product.Sku;
+
+            _context.Products.Update(result);
+            await _context.SaveChangesAsync();
+
+            return "Product Updated";
         }
     }
 }
