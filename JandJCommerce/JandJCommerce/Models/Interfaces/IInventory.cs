@@ -8,10 +8,10 @@ namespace JandJCommerce.Models.Interfaces
 {
     public interface IInventory
     {
-        Task<IActionResult> CreateProduct(Product product);
-        Task<IActionResult> GetProductById(int id);
-        Task<IActionResult> GetProducts();
-        Task<IActionResult> UpdateProduct(int id, Product product);
-        Task<IActionResult> DeleteProduct(int id);
+        Task<string> CreateProduct(Product product);
+        Task<Product> GetProductById(int id);
+        Task<List<Product>> GetProducts();
+        Task<string> UpdateProduct(int id, Product product);
+        Task<string> DeleteProduct(int id);
     }
 }
