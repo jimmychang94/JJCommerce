@@ -14,6 +14,22 @@ namespace JandJCommerce.Data
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>().HasData(
+                new
+                {
+                    ID = 1,
+                    Name = "",
+                    Sku = "",
+                    Description = "",
+                    Image = "",
+                    Price = 12.104M,
+                    Category = "Desk",
+                }
+                );
+        }
+
         public DbSet<Product> Products { get; set; }
     }
 }
