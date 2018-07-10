@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models.Interfaces
 {
-    interface IInventory
+    public interface IInventory
     {
-        Task<IActionResult> CreatePost(Product product);
-        Task<IActionResult> GetPostById(int id);
-        Task<IActionResult> GetPosts();
-        Task<IActionResult> UpdatePost(int id, Product product);
-        Task<IActionResult> DeletePost(int id);
+        Task<IActionResult> CreateProduct(Product product);
+        Task<IActionResult> GetProductById(int id);
+        Task<IActionResult> GetProducts();
+        Task<IActionResult> UpdateProduct(int id, Product product);
+        Task<IActionResult> DeleteProduct(int id);
     }
 }

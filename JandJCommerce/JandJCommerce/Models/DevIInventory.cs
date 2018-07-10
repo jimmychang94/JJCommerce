@@ -18,27 +18,27 @@ namespace JandJCommerce.Models
             _context = context;
         }
 
-        public Task<IActionResult> CreatePost(Product product)
+        public Task<IActionResult> CreateProduct(Product product)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IActionResult> DeletePost(int id)
+        public Task<IActionResult> DeleteProduct(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IActionResult> GetPostById(int id)
+        public Task<IActionResult> GetProductById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IActionResult> GetPosts()
+        public Task<IActionResult> GetProducts()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IActionResult> UpdatePost(int id, Product product)
+        public Task<IActionResult> UpdateProduct(int id, Product product)
         {
             throw new NotImplementedException();
         }
