@@ -6,16 +6,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JandJCommerce.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace JandJCommerce.Models
 {
     public class DevIInventory : IInventory
     {
         private DbContext _context;
+        private readonly IConfiguration Configuration;
 
-        public DevIInventory(DbContext context)
+        public DevIInventory(DbContext context, IConfiguration configuration)
         {
             _context = context;
+            Configuration = configuration;
         }
 
         public Task<IActionResult> CreateProduct(Product product)
