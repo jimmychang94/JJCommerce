@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JandJCommerce.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,10 @@ namespace JandJCommerce.Controllers
 {
     public class UserController : Controller
     {
-        private UserManager<ApplicationException> _userManager;
-        private SignInManager<ApplicationException> _signInManager;
+        private UserManager<ApplicationUser> _userManager;
+        private SignInManager<ApplicationUser> _signInManager;
 
-        public UserController(UserManager<ApplicationException> userManager, SignInManager<ApplicationException> signInManager)
+        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -28,13 +29,6 @@ namespace JandJCommerce.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public Task<IActionResult> Register()
-        {
-            return View();
-        }
-
 
     }
 }
