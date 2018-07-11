@@ -12,6 +12,7 @@ namespace JandJCommerce.Data
     {
         public ApplicationDbcontext(DbContextOptions<ApplicationDbcontext> options): base(options)
         {
+            
         }
     }
 }
