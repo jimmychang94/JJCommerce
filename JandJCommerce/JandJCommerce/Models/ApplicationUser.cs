@@ -12,6 +12,6 @@ namespace JandJCommerce.Models
 
         public string LastName { get; set; }
 
-        
+        public string Location { get; set; }
     }
 }

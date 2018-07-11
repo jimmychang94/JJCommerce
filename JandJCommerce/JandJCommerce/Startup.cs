@@ -30,13 +30,13 @@ namespace JandJCommerce
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CommerceDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("FurnitureConnectionDefault")));
             services.AddMvc();
 
             services.AddScoped<IInventory, DevIInventory>();
 
             services.AddDbContext<ApplicationDbcontext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                   options.UseSqlServer(Configuration.GetConnectionString("UserConnectionDefault")));
             services.AddMvc();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
