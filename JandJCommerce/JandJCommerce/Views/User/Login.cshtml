@@ -1,0 +1,42 @@
+﻿@model  LoginViewModel
+
+<h2>Login</h2>
+
+<div>
+    <form asp-action="Login" method="post">
+        <div>
+            <label asp-for="Email">@Model.Email</label>
+            <div>
+                <input asp-for="Email" />
+            </div>
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <div>
+                <input asp-for="Password" type="password" />
+            </div>
+        </div>
+        <div>
+            <div>
+                <label asp-for="RememberMe">
+                    <input asp-for="RememberMe" />
+                    @Html.DisplayNameFor(m => m.RememberMe)
+                </label>
+            </div>
+        </div>
+        <div>
+            <div>
+                <input type="submit" value="Log in" />
+            </div>
+        </div>
+    </form>
+
+
+    <div>
+        <a asp-action="Register">Register a new User</a>
+    </div>
+    <div>
+        <a asp-action="Index" asp-controller="Home">Return to the Home Page</a>
+    </div>
+
+</div>
