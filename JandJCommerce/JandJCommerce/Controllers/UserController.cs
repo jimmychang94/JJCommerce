@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JandJCommerce.Models;
+using JandJCommerce.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,30 @@ namespace JandJCommerce.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel rvm)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = rvm.Email,
+                Email = rvm.Email,
+                FirstName = rvm.FirstName,
+                LastName = rvm.LastName,
+                Location = rvm.Location
+            };
+
+            var result = await _userManager.CreateAsync(user, rvm.Password);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: true);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(rvm);
+        }
+
 
     }
 }

@@ -1,0 +1,51 @@
+﻿@model RegisterViewModel
+
+
+<h2>Create a User</h2>
+
+<div>
+    <div>
+        <form asp-action="Register" method="post">
+            <div>
+                <label asp-for="FirstName" >@Model.FirstName</label>
+                <div>
+                    <input asp-for="FirstName"/>
+                </div>
+            </div>
+            <div>
+                <label asp-for="LastName" >@Model.LastName</label>
+                <div>
+                    <input asp-for="LastName"/>
+                </div>
+            </div>
+            <div>
+                <label asp-for="Location" >@Model.Location</label>
+                <div>
+                    <input asp-for="Location"/>
+                </div>
+            </div>
+            <div>
+                <label asp-for="Password" >@Model.Password</label>
+                <div>
+                    <input asp-for="Password" type="password"/>
+                </div>
+            </div>
+            <div>
+                <label asp-for="ConfirmPassword" >@Model.ConfirmPassword</label>
+                <div>
+                    <input asp-for="ConfirmPassword" type="password"/>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <input type="submit" value="Create User" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <a asp-action="Index" asp-controller="Home">Return to the Home Page</a>
+    </div>
+</div>
