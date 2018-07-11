@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JandJCommerce.Models;
 using JandJCommerce.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,12 +27,14 @@ namespace JandJCommerce.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
             var user = new ApplicationUser
@@ -54,6 +57,31 @@ namespace JandJCommerce.Controllers
             return View(rvm);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel lvm)
+        {
+            var result = await _signInManager.PasswordSignInAsync
+                (
+                lvm.Email,
+                lvm.Password,
+                lvm.RememberMe,
+                lockoutOnFailure: false
+                );
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(lvm);
+        }
     }
 }
