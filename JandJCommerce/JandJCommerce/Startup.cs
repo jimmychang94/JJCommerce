@@ -33,8 +33,6 @@ namespace JandJCommerce
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
 
-            services.AddScoped<IInventory, DevIInventory>();
-
             services.AddDbContext<ApplicationDbcontext>(options =>
                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
@@ -43,7 +41,7 @@ namespace JandJCommerce
                 .AddEntityFrameworkStores<ApplicationDbcontext>()
                 .AddDefaultTokenProviders();
 
-
+            services.AddScoped<IInventory, DevIInventory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
