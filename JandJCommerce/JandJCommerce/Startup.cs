@@ -57,7 +57,7 @@ namespace JandJCommerce
             app.UseAuthentication();
 
 
-            app.UseMvc();
+            app.UseMvcWithDefaultRoute();
 
             app.Run(async (context) =>
             {
