@@ -14,4 +14,6 @@ namespace JandJCommerce.Models
 
         public string Location { get; set; }
     }
+
+    
 }
