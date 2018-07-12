@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using JandJCommerce.Models;
 using JandJCommerce.Models.ViewModels;
@@ -39,6 +40,8 @@ namespace JandJCommerce.Controllers
         {
             if(ModelState.IsValid)
             {
+                //make list of claims to then add too later
+                List<Claim> claims = new List<Claim>();
 
                 var user = new ApplicationUser
                 {
@@ -47,12 +50,27 @@ namespace JandJCommerce.Controllers
                     FirstName = rvm.FirstName,
                     LastName = rvm.LastName,
                     Location = rvm.Location
+                    //phone?
                 };
 
                 var result = await _userManager.CreateAsync(user, rvm.Password);
 
                 if (result.Succeeded)
                 {
+                    //start making claims to add to list//
+                    Claim fullNameClaim = new Claim(ClaimTypes.Name, $"{rvm.FirstName} {rvm.LastName}");
+                    Claim emailClaim = new Claim(ClaimTypes.Email, rvm.Email);
+                    Claim locationClaim = new Claim(ClaimTypes.StreetAddress, rvm.Location);
+
+                    //add claims to list -claims
+                    claims.Add(fullNameClaim);
+                    claims.Add(emailClaim);
+                    claims.Add(locationClaim);
+
+                    //add all claims /w s for all/ to user manager DB
+                    await _userManager.AddClaimsAsync(user, claims);
+
+
                     await _signInManager.SignInAsync(user, isPersistent: true);
                     return RedirectToAction("Index", "Home");
                 }
