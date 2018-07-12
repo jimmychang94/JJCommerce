@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using JandJCommerce.Models;
 using JandJCommerce.Models.ViewModels;
@@ -39,7 +40,7 @@ namespace JandJCommerce.Controllers
         {
             if(ModelState.IsValid)
             {
-
+                List<Claim> myClaims = new List<Claim>();
                 var user = new ApplicationUser
                 {
                     UserName = rvm.Email,
@@ -53,8 +54,14 @@ namespace JandJCommerce.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: true);
-                    return RedirectToAction("Index", "Home");
+                    Claim nameClaim = new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}");
+
+                    myClaims.Add(nameClaim);
+                    await _userManager.AddClaimsAsync(user, myClaims);
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    IEnumerable<Claim> myEnumerableClaims = await _userManager.GetClaimsAsync(user);
+                    return RedirectToAction("Index", "Home", myEnumerableClaims);
                 }
             }
             return View(rvm);
@@ -83,7 +90,21 @@ namespace JandJCommerce.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    ApplicationUser user = _userManager.Users.FirstOrDefault(u => u.Email == lvm.Email);
+                    IEnumerable<Claim> myClaims = await _userManager.GetClaimsAsync(user);
+                    IndexUserViewModel indexUser = new IndexUserViewModel()
+                    {
+                        //MyClaims = myClaims
+                    };
+                    foreach(Claim claim in myClaims)
+                    {
+                        if (claim.Type == ClaimTypes.Name)
+                        {
+                            indexUser.LoggedIn = true;
+                            indexUser.UserName = claim.Value;
+                        }
+                    }
+                    return RedirectToAction("Index", "Home", indexUser);
                 }
             }
 
