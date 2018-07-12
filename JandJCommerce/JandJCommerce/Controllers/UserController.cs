@@ -41,7 +41,7 @@ namespace JandJCommerce.Controllers
             if(ModelState.IsValid)
             {
                 //make list of claims to then add too later
-                List<Claim> claims = new List<Claim>();
+                List<Claim> userClaims = new List<Claim>();
 
                 var user = new ApplicationUser
                 {
@@ -68,11 +68,20 @@ namespace JandJCommerce.Controllers
                     claims.Add(locationClaim);
 
                     //add all claims /w s for all/ to user manager DB
-                    await _userManager.AddClaimsAsync(user, claims);
+                    await _userManager.AddClaimsAsync(user, userClaims);
 
 
                     await _signInManager.SignInAsync(user, isPersistent: true);
-                    return RedirectToAction("Index", "Home");
+                    IndexUserViewModel iuvm = new IndexUserViewModel();
+                    foreach(Claim claim in userClaims)
+                    {
+                        if(claim.Type == ClaimTypes.Name)
+                        {
+                            iuvm.LoggedIn = true;
+                            iuvm.UserName = claim.Value;
+                        }
+                    }
+                    return RedirectToAction("Index", "Home", iuvm);
                 }
             }
             return View(rvm);
@@ -101,7 +110,21 @@ namespace JandJCommerce.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    ApplicationUser user = _userManager.Users.FirstOrDefault(u => u.Email == lvm.Email);
+                    IEnumerable<Claim> userClaims = await _userManager.GetClaimsAsync(user);
+                    IndexUserViewModel iuvm = new IndexUserViewModel()
+                    {
+                        //MyClaims = myClaims
+                    };
+                    foreach(Claim claim in userClaims)
+                    {
+                        if (claim.Type == ClaimTypes.Name)
+                        {
+                            iuvm.LoggedIn = true;
+                            iuvm.UserName = claim.Value;
+                        }
+                    }
+                    return RedirectToAction("Index", "Home", iuvm);
                 }
             }
 
