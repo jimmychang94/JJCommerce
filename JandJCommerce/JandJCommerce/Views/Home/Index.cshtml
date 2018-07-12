@@ -1,1 +1,12 @@
-﻿
+﻿<a asp-action="Register" asp-controller="User">Register</a>
+<a asp-action="Login" asp-controller="User">Login</a>
+
+<h2>Home</h2>
+
+
+@if(TempData["LoggedOut"] != null)
+{
+    <p>@TempData["LoggedOut"]</p>
+}
+
+<p>Welcome to the Home Page</p>

@@ -30,30 +30,33 @@ namespace JandJCommerce.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            return View();
+            return View(new RegisterViewModel());
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
-            var user = new ApplicationUser
+            if(ModelState.IsValid)
             {
-                UserName = rvm.Email,
-                Email = rvm.Email,
-                FirstName = rvm.FirstName,
-                LastName = rvm.LastName,
-                Location = rvm.Location
-            };
 
-            var result = await _userManager.CreateAsync(user, rvm.Password);
+                var user = new ApplicationUser
+                {
+                    UserName = rvm.Email,
+                    Email = rvm.Email,
+                    FirstName = rvm.FirstName,
+                    LastName = rvm.LastName,
+                    Location = rvm.Location
+                };
 
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: true);
-                return RedirectToAction("Index", "Home");
+                var result = await _userManager.CreateAsync(user, rvm.Password);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: true);
+                    return RedirectToAction("Index", "Home");
+                }
             }
-
             return View(rvm);
         }
 
@@ -61,27 +64,38 @@ namespace JandJCommerce.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel lvm)
         {
-            var result = await _signInManager.PasswordSignInAsync
-                (
-                lvm.Email,
-                lvm.Password,
-                lvm.RememberMe,
-                lockoutOnFailure: false
-                );
-
-            if (result.Succeeded)
+            if(ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                var result = await _signInManager.PasswordSignInAsync
+                    (
+                    lvm.Email,
+                    lvm.Password,
+                    false,
+                    lockoutOnFailure: false
+                    );
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
             return View(lvm);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            TempData["LoggedOut"] = "User Logged Out";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
