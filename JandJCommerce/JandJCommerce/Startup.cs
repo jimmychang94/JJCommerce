@@ -41,6 +41,13 @@ namespace JandJCommerce
                 .AddEntityFrameworkStores<ApplicationDbcontext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Admin));
+                options.AddPolicy("MemberOnly", policy => policy.RequireRole(ApplicationRoles.Member));
+                //options.AddPolicy("LocationSeattle", policy => policy.Requirements.Add(new ))
+            });
+
             services.AddScoped<IInventory, DevIInventory>();
         }
 

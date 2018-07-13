@@ -82,6 +82,10 @@ namespace JandJCommerce.Controllers
 
                     await _signInManager.SignInAsync(user, false);
 
+                    if (await _userManager.IsInRoleAsync(user, ApplicationRoles.Admin))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -111,9 +115,11 @@ namespace JandJCommerce.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole(ApplicationRoles.Admin))
+                    var user = await _userManager.FindByEmailAsync(lvm.Email);
+                   
+                    if (await _userManager.IsInRoleAsync(user, ApplicationRoles.Admin))
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Admin");
                     }
 
                     return RedirectToAction("Index", "Home");

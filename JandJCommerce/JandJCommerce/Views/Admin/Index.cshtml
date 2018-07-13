@@ -1,32 +1,42 @@
 ﻿@model List<Product>;
 
-
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Sku</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(Product product in Model)
-        {
+@{
+    Layout = "_Layout";
+}
+<div class="container pt-5">
+    <h3>Products Table</h3>
+    <a asp-action="Create" asp-controller="Product">Create</a>
+    <table class="table">
+        <thead>
             <tr>
-                <td>@product.ID</td>
-                <td>@product.Name</td>
-                <td>@product.Category</td>
-                <td>@product.Price</td>
-                <td>@product.Description</td>
-                <td>@product.Sku</td>
-                <td><a asp-action="Details" asp-controller="Products">Details</a></td>
-                <td><a asp-action="Update" asp-controller="Products">Update</a></td>
-                <td><a asp-action="Delete" asp-controller="Products">Delete</a></td>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Sku</th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (Product product in Model)
+            {
+                <tr>
+                    <td>@product.ID</td>
+                    <td>@product.Name</td>
+                    <td>@product.Category</td>
+                    <td>@product.Price</td>
+                    <td>@product.Description</td>
+                    <td>@product.Sku</td>
+                    <td><a asp-action="Details" asp-controller="Product">Details</a></td>
+                    <td><a asp-action="Update" asp-controller="Product">Update</a></td>
+                    <td><a asp-action="Delete" asp-controller="Product">Delete</a></td>
+                </tr>
 
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
+
+</div>
