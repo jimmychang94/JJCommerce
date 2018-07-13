@@ -17,36 +17,37 @@ namespace JandJCommerce.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+        
             modelBuilder.Entity<Product>().HasData(
                 new
                 {
                     ID = 1,
                     Name = "Galant Corner Desk",
-                    Sku = "somerandomNumsAndLetters",
+                    Sku = "342asdf78",
                     Description = "Desk measures 62\" x 48\" long edges, with a depth of 32\" on the short side.Tabletop is white and hardware is brushed grey. Legs are 29\" tall ",
                     Image = "",
                     Price = 12.104M,
-                    Category = (Category)8
+                    Category = (Category)7
                 },
                 new
                 {
                     ID = 2,
                     Name = "LapTop Stand",
-                    Sku = "somerandomNumsAndLetters",
+                    Sku = "8234aa32",
                     Description = "White 4 foot tall Desk",
                     Image = "",
                     Price = 29.99M,
-                    Category = (Category)8
+                    Category = (Category)7
                 },
                  new
                  {
                      ID = 3,
                      Name = "Coffee Table",
-                     Sku = "somerandomNumsAndLetters",
+                     Sku = "345asdf324",
                      Description = "Brown round table, oak",
                      Image = "",
                      Price = 45.00M,
-                     Category = (Category)6
+                     Category = (Category)5
                  },
                  new
                  {
@@ -56,7 +57,7 @@ namespace JandJCommerce.Data
                      Description = "4 1/2 feet long, 18\" wide 78",
                      Image = "",
                      Price = 23.00M,
-                     Category = (Category)4
+                     Category = (Category)3
                  },
                 new
                 {
@@ -66,7 +67,7 @@ namespace JandJCommerce.Data
                     Description = "Plush leather with tan accents",
                     Image = "",
                     Price = 54.95M,
-                    Category = (Category)2
+                    Category = (Category)1
                 },
                 new
                 {
@@ -76,7 +77,7 @@ namespace JandJCommerce.Data
                     Description = "five drawer steel lock cabinet",
                     Image = "",
                     Price = 15.00M,
-                    Category = (Category)7
+                    Category = (Category)6
                 },
                  new
                  {
@@ -106,7 +107,7 @@ namespace JandJCommerce.Data
                       Description = "Black 6' by 6' 12\", 6 shelf, Walnut",
                       Image = "",
                       Price = 75.00M,
-                      Category = (Category)5
+                      Category = (Category)4
                   },
                  new
                  {
@@ -116,7 +117,7 @@ namespace JandJCommerce.Data
                      Description = "fully furnished ping pong table, comes with 2 paddles and 5 ping pong balls.",
                      Image = "",
                      Price = 65.00M,
-                     Category = (Category)9
+                     Category = (Category)8
                  }
                 );
         }

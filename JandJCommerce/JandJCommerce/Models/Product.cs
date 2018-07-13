@@ -18,14 +18,14 @@ namespace JandJCommerce.Models
 
     public enum Category
     {
-        Chairs,//1
-        Beds,//2
-        Couches,//3
-        Dressers,//4
-        Shelves,//5
-        Tables,//6
-        Cabinets,//7
-        Desks,//8
-        Other//9
+        Chairs,//0
+        Beds,//1
+        Couches,//2
+        Dressers,//3
+        Shelves,//4
+        Tables,//5
+        Cabinets,//6
+        Desks,//7
+        Other//8
     }
 }
