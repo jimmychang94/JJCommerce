@@ -58,30 +58,31 @@ namespace JandJCommerce.Controllers
                 if (result.Succeeded)
                 {
                     //start making claims to add to list//
-                    Claim fullNameClaim = new Claim(ClaimTypes.Name, $"{rvm.FirstName} {rvm.LastName}");
+                    Claim fullNameClaim = new Claim("FullName" , $"{rvm.FirstName} {rvm.LastName}");
                     Claim emailClaim = new Claim(ClaimTypes.Email, rvm.Email);
                     Claim locationClaim = new Claim(ClaimTypes.StreetAddress, rvm.Location);
 
                     //add claims to list -claims
-                    claims.Add(fullNameClaim);
-                    claims.Add(emailClaim);
-                    claims.Add(locationClaim);
+                    userClaims.Add(fullNameClaim);
+                    userClaims.Add(emailClaim);
+                    userClaims.Add(locationClaim);
 
                     //add all claims /w s for all/ to user manager DB
                     await _userManager.AddClaimsAsync(user, userClaims);
 
-
-                    await _signInManager.SignInAsync(user, isPersistent: true);
-                    IndexUserViewModel iuvm = new IndexUserViewModel();
-                    foreach(Claim claim in userClaims)
+                    if ((user.Email == "furnitureAdmin@JJfurniture.com") || (user.Email == "amanda@codefellows.com"))
                     {
-                        if(claim.Type == ClaimTypes.Name)
-                        {
-                            iuvm.LoggedIn = true;
-                            iuvm.UserName = claim.Value;
-                        }
+                        await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+                        await _userManager.AddToRoleAsync(user, ApplicationRoles.Admin);
                     }
-                    return RedirectToAction("Index", "Home", iuvm);
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+                    }
+
+                    await _signInManager.SignInAsync(user, false);
+
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View(rvm);
@@ -110,21 +111,12 @@ namespace JandJCommerce.Controllers
 
                 if (result.Succeeded)
                 {
-                    ApplicationUser user = _userManager.Users.FirstOrDefault(u => u.Email == lvm.Email);
-                    IEnumerable<Claim> userClaims = await _userManager.GetClaimsAsync(user);
-                    IndexUserViewModel iuvm = new IndexUserViewModel()
+                    if (User.IsInRole(ApplicationRoles.Admin))
                     {
-                        //MyClaims = myClaims
-                    };
-                    foreach(Claim claim in userClaims)
-                    {
-                        if (claim.Type == ClaimTypes.Name)
-                        {
-                            iuvm.LoggedIn = true;
-                            iuvm.UserName = claim.Value;
-                        }
+                        return RedirectToAction("Index", "Home");
                     }
-                    return RedirectToAction("Index", "Home", iuvm);
+
+                    return RedirectToAction("Index", "Home");
                 }
             }
 
