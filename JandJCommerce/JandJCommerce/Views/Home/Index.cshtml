@@ -1,4 +1,8 @@
-﻿@model IndexUserViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
+
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
 
 <header>
     <nav class="navbar navbar-light bg-secondary navbar-expand-lg fixed-top">
@@ -32,15 +36,14 @@
 <main class="container pt-4">
     <h2>Home</h2>
 
-    @if(Model.LoggedIn)
-     {
-         <h3>Hi @Model.UserName</h3>
-     }
-
-    @if(TempData["LoggedOut"] != null)
-     {
-         <p>@TempData["LoggedOut"]</p>
-     }
+@if (SignInManager.IsSignedIn(User))
+{
+    <h4>Hello @User.Claims.First(c => c.Type == "FullName").Value</h4>
+}
+else
+{
+    <h4>Hello Anonymous!</h4>
+}
 
 <p>Welcome to the Home Page</p>
 

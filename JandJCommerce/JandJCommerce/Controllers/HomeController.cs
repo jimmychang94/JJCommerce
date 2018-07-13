@@ -18,20 +18,9 @@ namespace JandJCommerce.Controllers
             _inventory = inventory;
         }
 
-        public IActionResult Index (IndexUserViewModel iuvm)
+        public IActionResult Index ()
         {
-            //if (iuvm.MyClaims != null)
-            //{
-            //    foreach(Claim claim in iuvm.MyClaims)
-            //    {
-            //        if (claim.Type == ClaimTypes.Name)
-            //        {
-            //            iuvm.LoggedIn = true;
-            //            iuvm.UserName = claim.Value;
-            //        }
-            //    }
-            //}
-            return View(iuvm);
+            return View();
         }
     }
 }
