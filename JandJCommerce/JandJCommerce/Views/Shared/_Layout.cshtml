@@ -1,0 +1,49 @@
+﻿<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/StyleSheet.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light bg-secondary navbar-expand-lg fixed-top">
+
+            <a asp-action="Index" asp-controller="Home" class="navbar-brand">J & J Furniture </a>
+
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto pl-3">
+                    <li class="navbar-item pl-3">
+                        <a asp-action="Index" asp-controller="Home" class="nav-link">Homepage</a>
+                    </li>
+                    <li class="navbar-item pl-3">
+                        <a href="#" class="nav-link">Products</a>
+                    </li>
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <li class="navbar-item pl-3">
+                            <a asp-action="Login" asp-controller="User" class="nav-link">Login</a>
+                        </li>
+                        <li class="navbar-item pl-3">
+                            <a asp-action="Register" asp-controller="User" class="nav-link">Register</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="navbar-item pl-3">
+                            <a asp-action="Logout" asp-controller="User" class="nav-link">Logout</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+</body>
