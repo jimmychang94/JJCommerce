@@ -21,7 +21,7 @@ namespace JandJCommerce.Controllers
 
 
         [HttpGet(Name ="Details")]
-        public async Task<IActionResult> GetDetailsOfProduct(int id)
+        public async Task<IActionResult> Details(int id)
         {
             Product product = await _inventory.GetProductById(id);
             return View(product);
