@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using JandJCommerce.Data;
 using JandJCommerce.Models;
+using JandJCommerce.Models.Handlers;
 using JandJCommerce.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -45,10 +47,12 @@ namespace JandJCommerce
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Admin));
                 options.AddPolicy("MemberOnly", policy => policy.RequireRole(ApplicationRoles.Member));
-                //options.AddPolicy("LocationSeattle", policy => policy.Requirements.Add(new ))
+                options.AddPolicy("Seattle", policy => policy.Requirements.Add(new LocationRequirement("Seattle")));
+                options.AddPolicy("Cat", policy => policy.Requirements.Add(new LocationRequirement("Cat Stop")));
             });
 
             services.AddScoped<IInventory, DevIInventory>();
+            services.AddSingleton<IAuthorizationHandler, LocationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -39,6 +39,12 @@
                             <a asp-action="Logout" asp-controller="User" class="nav-link">Logout</a>
                         </li>
                     }
+                    @if (User.IsInRole(ApplicationRoles.Admin))
+                    {
+                        <li class="navbar-item pl-3">
+                            <a asp-action="Index" asp-controller="Admin" class="nav-link">Admin Dashboard</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </nav>

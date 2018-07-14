@@ -1,5 +1,6 @@
 ﻿using JandJCommerce.Models.Interfaces;
 using JandJCommerce.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,18 @@ namespace JandJCommerce.Controllers
         }
 
         public IActionResult Index ()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "Seattle")]
+        public IActionResult Seattle()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "Cat")]
+        public IActionResult Cat()
         {
             return View();
         }
