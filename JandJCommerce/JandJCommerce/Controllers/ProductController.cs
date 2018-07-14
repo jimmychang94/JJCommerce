@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JandJCommerce.Models;
 using JandJCommerce.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JandJCommerce.Controllers
 {
+    [Authorize(Policy ="AdminOnly")]
     public class ProductController : Controller
     {
         private IInventory _inventory;
@@ -16,9 +19,63 @@ namespace JandJCommerce.Controllers
             _inventory = inventory;
         }
 
-        public IActionResult Index()
+
+        [HttpGet(Name ="Details")]
+        public async Task<IActionResult> GetDetailsOfProduct(int id)
+        {
+            Product product = await _inventory.GetProductById(id);
+            return View(product);
+        }
+
+
+        [HttpGet(Name = "Update")]
+        public async Task<IActionResult> UpdateProduct(int id)
+        {
+            Product product = await _inventory.GetProductById(id);
+            return View(product);
+        }
+
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct(int id, Product product)
+        {
+            string result = await _inventory.UpdateProduct(id, product);
+
+            if (result == "Product Not Found")
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+
+
+        [HttpDelete(Name = "Delete")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            string result = await _inventory.DeleteProduct(id);
+
+
+            if (result == "Product Not Found")
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+
+
+        [HttpGet(Name ="Create")]
+        public IActionResult GetViewForPost()
         {
             return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(Product product)
+        {
+            await _inventory.CreateProduct(product);
+
+            return RedirectToAction("Index", "Admin");
         }
     }
 }

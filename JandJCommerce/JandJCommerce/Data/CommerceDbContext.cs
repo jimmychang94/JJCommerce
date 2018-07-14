@@ -26,7 +26,7 @@ namespace JandJCommerce.Data
                     Sku = "342asdf78",
                     Description = "Desk measures 62\" x 48\" long edges, with a depth of 32\" on the short side.Tabletop is white and hardware is brushed grey. Legs are 29\" tall ",
                     Image = "~/assets/desk1.jpg",
-                    Price = 12.104M,
+                    Price = 12.10M,
                     Category = (Category)7
                 },
                 new
