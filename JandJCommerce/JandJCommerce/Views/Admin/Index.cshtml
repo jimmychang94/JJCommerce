@@ -30,9 +30,9 @@
                     <td>@product.Price</td>
                     <td>@product.Description</td>
                     <td>@product.Sku</td>
-                    <td><a asp-action="Details" asp-controller="Product">Details</a></td>
-                    <td><a asp-action="Update" asp-controller="Product">Update</a></td>
-                    <td><a asp-action="Delete" asp-controller="Product">Delete</a></td>
+                    <td><a asp-action="Details" asp-route-id="@product.ID" asp-controller="Product">Details</a></td>
+                    <td><a asp-action="Update" asp-route-id="@product.ID" asp-controller="Product">Update</a></td>
+                    <td><a asp-action="Delete" asp-route-id="@product.ID" asp-controller="Product">Delete</a></td>
                 </tr>
 
             }

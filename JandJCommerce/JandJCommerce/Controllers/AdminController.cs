@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Controllers
 {
-    [Authorize(Policy="AdminOnly")]
+    [Authorize(Policy = "AdminOnly")]
     public class AdminController : Controller
     {
         private IInventory _inventory;
