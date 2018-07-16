@@ -22,7 +22,7 @@
                         <a asp-action="Index" asp-controller="Home" class="nav-link">Homepage</a>
                     </li>
                     <li class="navbar-item pl-3">
-                        <a href="#" class="nav-link">Products</a>
+                        <a asp-action="Index" asp-controller="Shop" class="nav-link">Products</a>
                     </li>
                     @if (!SignInManager.IsSignedIn(User))
                     {

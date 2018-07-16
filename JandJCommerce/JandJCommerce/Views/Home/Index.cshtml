@@ -4,17 +4,37 @@
 
 
 <main class="container pt-5">
-    <h2>Home</h2>
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <h4>Hello @User.Claims.First(c => c.Type == "FullName").Value</h4>
-}
-else
-{
-    <h4>Hello Anonymous!</h4>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h4>Hello @User.Claims.First(c => c.Type == "FullName").Value</h4>
+    }
+    else
+    {
+        <h4>Hello Anonymous!</h4>
+    }
+    <br />
+    <h2>Welcome to Jimmy and Judah Commerce</h2>
+    <br />
+    <h3>We sell furniture of all kind!</h3>
 
-<p>Welcome to the Home Page</p>
+    <br />
+    <p>
+        Our current selection falls within 9 categories:
+        <ol>
+            <li>Chairs</li>
+            <li>Beds</li>
+            <li>Couches</li>
+            <li>Dressers</li>
+            <li>Shelves</li>
+            <li>Tables</li>
+            <li>Cabinets</li>
+            <li>Desks</li>
+            <li>Other</li>
+        </ol>
+    </p>
+    <p>Please use our navigation bar to get started.</p>
+    <br />
 
+    <h6>We hope you enjoy shopping here!</h6>
 </main>
