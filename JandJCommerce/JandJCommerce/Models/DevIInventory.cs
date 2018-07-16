@@ -34,7 +34,7 @@ namespace JandJCommerce.Models
 
         public async Task<string> DeleteProduct(int id)
         {
-            Product product = await _context.Products.FindAsync(id);
+            Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
             if (product == null)
             {
                 return "Product Not Found";

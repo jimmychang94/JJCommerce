@@ -49,7 +49,7 @@ namespace JandJCommerce.Controllers
         }
 
 
-        [HttpDelete(Name ="Delete")]
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             string result = await _inventory.DeleteProduct(id);
@@ -66,15 +66,19 @@ namespace JandJCommerce.Controllers
         [HttpGet(Name ="Create")]
         public IActionResult Create()
         {
-            return View();
+            return View(new Product());
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(Product product)
+        public async Task<IActionResult> Create(Product product)
         {
-            await _inventory.CreateProduct(product);
+            var result = await _inventory.CreateProduct(product);
 
+            if (result == "Product Not Created")
+            {
+                return View(product);
+            }
             return RedirectToAction("Index", "Admin");
         }
     }
