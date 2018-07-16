@@ -28,18 +28,18 @@ namespace JandJCommerce.Controllers
         }
 
 
-        [HttpGet(Name = "Update")]
-        public async Task<IActionResult> UpdateProduct(int id)
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
         {
             Product product = await _inventory.GetProductById(id);
             return View(product);
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateProduct(int id, Product product)
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Product product)
         {
-            string result = await _inventory.UpdateProduct(id, product);
+            string result = await _inventory.UpdateProduct(product.ID, product);
 
             if (result == "Product Not Found")
             {
@@ -49,8 +49,8 @@ namespace JandJCommerce.Controllers
         }
 
 
-        [HttpDelete(Name = "Delete")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        [HttpDelete(Name ="Delete")]
+        public async Task<IActionResult> Delete(int id)
         {
             string result = await _inventory.DeleteProduct(id);
 
@@ -64,7 +64,7 @@ namespace JandJCommerce.Controllers
 
 
         [HttpGet(Name ="Create")]
-        public IActionResult GetViewForPost()
+        public IActionResult Create()
         {
             return View();
         }
