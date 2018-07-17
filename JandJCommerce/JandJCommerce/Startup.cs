@@ -53,6 +53,8 @@ namespace JandJCommerce
 
             services.AddScoped<IInventory, DevIInventory>();
             services.AddScoped<IAuthorizationHandler, LocationHandler>();
+            services.AddScoped<IBasket, DevIBasket>();
+            services.AddScoped<IBasketItem, DevIBasketItem>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
