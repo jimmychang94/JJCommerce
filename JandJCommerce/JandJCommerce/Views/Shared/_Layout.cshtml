@@ -32,12 +32,25 @@
                         <li class="navbar-item pl-3">
                             <a asp-action="Register" asp-controller="User" class="nav-link">Register</a>
                         </li>
+
                     }
                     else
                     {
                         <li class="navbar-item pl-3">
                             <a asp-action="Logout" asp-controller="User" class="nav-link">Logout</a>
                         </li>
+                        @if (User.Claims.FirstOrDefault(a => a.Type == ClaimTypes.StreetAddress).Value == "Seattle")
+                        {
+                            <li class="navbar-item pl-3">
+                                <a asp-action="Seattle" asp-controller="Home" class="nav-link">Seattle Discounts</a>
+                            </li>
+                        }
+                        @if (User.Claims.FirstOrDefault(a => a.Type == ClaimTypes.StreetAddress).Value == "Cat Stop")
+                        {
+                            <li class="navbar-item pl-3">
+                                <a asp-action="Cat" asp-controller="Home" class="nav-link">Cat Stop</a>
+                            </li>
+                        }
                     }
                     @if (User.IsInRole(ApplicationRoles.Admin))
                     {
@@ -45,6 +58,15 @@
                             <a asp-action="Index" asp-controller="Admin" class="nav-link">Admin Dashboard</a>
                         </li>
                     }
+
+                </ul>
+
+                <ul class="navbar-nav ml-auto pr-3">
+                    <li class="navbar-item">
+                        <a asp-action="Index" asp-controller="Basket" class=" btn btn-info nav-link">
+                            Basket <span class="badge badge-light">9</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
