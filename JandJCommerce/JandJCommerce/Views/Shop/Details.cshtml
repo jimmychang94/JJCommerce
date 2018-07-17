@@ -9,17 +9,17 @@
     <h1>Details for @Model.Name</h1>
 
     <img src="@Model.Image" alt="Image of @Model.Name" />
-    <table class="table">
-        <tr>
-            <td>@Model.Category</td>
-        </tr>
-        <tr>
-            <td>$@Model.Price</td>
-        </tr>
-        <tr>
-            <td>@Model.Description</td>
-        </tr>
-    </table>
+    <ul>
+        <li>Category: @Model.Category</li>
+        <li>Price: $@Model.Price</li>
+        <li>Description: @Model.Description</li>
+    </ul>
+    <form asp-action="Create" asp-controller="BasketItem" method="post">
+        <label></label>
+        <input />
+        <input type="submit" class="btn btn-primary" value="Add to Cart" />
+
+    </form>
 
     <div>
         <a asp-action="Index" class="nav-link">Back to all products</a>

@@ -1,0 +1,23 @@
+﻿@model Basket;
+@using JandJCommerce.Data;
+@inject CommerceDbContext Context;
+
+@{
+    Layout = "_Layout";
+}
+
+<h4>Your Basket</h4>
+<ul>
+    @foreach (BasketItem item in Context.BasketItems.Where(b => b.BasketID == Model.ID))
+    {
+        <li>Name: @item.Product.Name</li>
+        <li>
+            <img src="@item.Product.Image" alt="Image of @item.Product.Name" />
+        </li>
+        <li>Category: @item.Product.Category</li>
+        <li>Price: @item.Product.Price</li>
+        <li>Description: @item.Product.Description</li>
+        <li>Quantity: @item.Quantity</li>
+    }
+</ul>
+<h5><a asp-action=""></a></h5>
