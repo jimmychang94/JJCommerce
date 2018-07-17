@@ -25,7 +25,7 @@ namespace JandJCommerce.Data
                     Name = "Galant Corner Desk",
                     Sku = "342asdf78",
                     Description = "Desk measures 62\" x 48\" long edges, with a depth of 32\" on the short side.Tabletop is white and hardware is brushed grey. Legs are 29\" tall ",
-                    Image = "~/assets/desk1.jpg",
+                    Image = @"\assets\desk1.jpg",
                     Price = 12.10M,
                     Category = (Category)7
                 },
@@ -35,7 +35,7 @@ namespace JandJCommerce.Data
                     Name = "LapTop Stand",
                     Sku = "8234aa32",
                     Description = "White 4 foot tall Desk",
-                    Image = "~/assets/laptopstandTable2.jpg",
+                    Image = @"\assets\laptopstandTable2.jpg",
                     Price = 29.99M,
                     Category = (Category)7
                 },
@@ -45,7 +45,7 @@ namespace JandJCommerce.Data
                      Name = "Coffee Table",
                      Sku = "345asdf324",
                      Description = "Brown round table, oak",
-                     Image = "~/assets/coffeetable.jpg",
+                     Image = @"\assets\coffeetable.jpg",
                      Price = 45.00M,
                      Category = (Category)5
                  },
@@ -55,7 +55,7 @@ namespace JandJCommerce.Data
                      Name = "Wood Hutch",
                      Sku = "24asf45b",
                      Description = "4 1/2 feet long, 18\" wide 78",
-                     Image = "~/assets/hutch.jpg",
+                     Image = @"\assets\hutch.jpg",
                      Price = 23.00M,
                      Category = (Category)3
                  },
@@ -65,7 +65,7 @@ namespace JandJCommerce.Data
                     Name = "Brown Leather Couch",
                     Sku = "567hgf35s",
                     Description = "Plush leather with tan accents",
-                    Image = "~/assets/couch2.jpg",
+                    Image = @"\assets\couch2.jpg",
                     Price = 54.95M,
                     Category = (Category)1
                 },
@@ -75,7 +75,7 @@ namespace JandJCommerce.Data
                     Name = "File Cabinet",
                     Sku = "001af293d",
                     Description = "four drawer oak lock cabinet",
-                    Image = "~/assets/Cabinets2.jpg",
+                    Image = @"\assets\Cabinets2.jpg",
                     Price = 15.00M,
                     Category = (Category)6
                 },
@@ -85,7 +85,7 @@ namespace JandJCommerce.Data
                      Name = "Rocking Chair",
                      Sku = "834lsefr",
                      Description = "Maple rocking chair, pristine condition, dark polish",
-                     Image = "~/assets/rockingChair2.jpg",
+                     Image = @"\assets\rockingChair2.jpg",
                      Price = 100.00M,
                      Category = (Category)0
                  },
@@ -95,7 +95,7 @@ namespace JandJCommerce.Data
                      Name = "Hot Rod Bed",
                      Sku = "330n534h",
                      Description = "Red plastic duriable kid size bed shaped like a corvette",
-                     Image = "~/assets/raceCarBed1.jpg",
+                     Image = @"\assets\raceCarBed1.jpg",
                      Price = 120.00M,
                      Category = (Category)1
                  },
@@ -105,7 +105,7 @@ namespace JandJCommerce.Data
                       Name = "Book Shelf",
                       Sku = "009hbk43p",
                       Description = "wood 6' by 6' 12\", 6 shelf, Walnut",
-                      Image = "~/assets/shelves2.jpg",
+                      Image = @"\assets\shelves2.jpg",
                       Price = 75.00M,
                       Category = (Category)4
                   },
@@ -115,7 +115,7 @@ namespace JandJCommerce.Data
                      Name = "Ping Pong Table",
                      Sku = "2234kk5b",
                      Description = "Fully furnished ping pong table, comes with 2 paddles and 5 ping pong balls.",
-                     Image = "~/assets/pingPong.jpg",
+                     Image = @"\assets\pingPong.jpg",
                      Price = 65.00M,
                      Category = (Category)8
                  }

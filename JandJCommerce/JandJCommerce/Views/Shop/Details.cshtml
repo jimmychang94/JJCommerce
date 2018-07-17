@@ -1,0 +1,27 @@
+﻿@model Product;
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container pt-5">
+
+    <h1>Details for @Model.Name</h1>
+
+    <img src="@Model.Image" alt="Image of @Model.Name" />
+    <table class="table">
+        <tr>
+            <td>@Model.Category</td>
+        </tr>
+        <tr>
+            <td>$@Model.Price</td>
+        </tr>
+        <tr>
+            <td>@Model.Description</td>
+        </tr>
+    </table>
+
+    <div>
+        <a asp-action="Index" class="nav-link">Back to all products</a>
+    </div>
+</div>

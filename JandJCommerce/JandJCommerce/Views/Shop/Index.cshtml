@@ -1,0 +1,33 @@
+﻿@model List<Product>;
+
+@{
+    Layout = "_Layout";
+}
+<div class="container pt-5">
+    <h3>All Products</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Product product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Category</td>
+                    <td>@product.Price</td>
+                    <td>@product.Description</td>
+                    <td><a asp-action="Details" asp-route-id="@product.ID" >Details</a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+</div>
