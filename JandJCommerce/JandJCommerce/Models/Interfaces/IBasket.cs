@@ -9,7 +9,7 @@ namespace JandJCommerce.Models.Interfaces
     public interface IBasket
     {
         Task<string> CreateBasket(ApplicationUser user);
-        Task<Basket> GetBasketById(int id);
+        Task<Basket> GetBasketById(ApplicationUser user);
         Task<List<Basket>> GetBaskets();
         Task<string> UpdateBasket(int id, Basket basket);
         Task<string> DeleteBasket(int id);

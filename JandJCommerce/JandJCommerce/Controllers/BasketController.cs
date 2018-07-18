@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JandJCommerce.Models;
 using JandJCommerce.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JandJCommerce.Controllers
@@ -13,10 +14,14 @@ namespace JandJCommerce.Controllers
     public class BasketController : Controller
     {
         private IBasket _context;
+        private SignInManager<ApplicationUser> _signInManager;
+        private UserManager<ApplicationUser> _userManager;
 
-        public BasketController(IBasket context)
+        public BasketController(IBasket context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         //[Authorize(Policy="AdminOnly")]
@@ -27,9 +32,18 @@ namespace JandJCommerce.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details()
         {
-            Basket basket = _context.GetBasketById(id).Result;
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            Basket basket = await _context.GetBasketById(user);
+            if (basket == null)
+            {
+                basket = new Basket()
+                {
+                    UserID = user.Id,
+                    BasketItems = new List<BasketItem>()
+                };
+            }
             return View(basket);
         }
 
@@ -46,9 +60,10 @@ namespace JandJCommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update()
         {
-            Basket basket = await _context.GetBasketById(id);
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            Basket basket = await _context.GetBasketById(user);
             return View(basket);
         }
 
