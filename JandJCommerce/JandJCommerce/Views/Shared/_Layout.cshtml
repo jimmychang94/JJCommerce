@@ -60,14 +60,18 @@
                     }
 
                 </ul>
-
-                <ul class="navbar-nav ml-auto pr-3">
-                    <li class="navbar-item">
-                        <a asp-action="Index" asp-controller="Basket" class=" btn btn-info nav-link">
-                            Basket <span class="badge badge-light">9</span>
-                        </a>
-                    </li>
-                </ul>
+                
+                @if(User.IsInRole(ApplicationRoles.Member))
+                {
+                    <ul class="navbar-nav ml-auto pr-3">
+                        <li class="navbar-item">
+                            <a asp-action="Details" asp-controller="Basket" class=" btn btn-info nav-link">
+                                Basket <span class="badge badge-light">9</span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                }
             </div>
         </nav>
     </header>

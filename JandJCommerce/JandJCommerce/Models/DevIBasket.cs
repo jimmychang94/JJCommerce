@@ -1,5 +1,6 @@
 ﻿using JandJCommerce.Data;
 using JandJCommerce.Models.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -49,9 +50,9 @@ namespace JandJCommerce.Models
             return "Basket Removed";
         }
 
-        public async Task<Basket> GetBasketById(int id)
+        public async Task<Basket> GetBasketById(ApplicationUser user)
         {
-            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.ID == id);
+            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id);
             return basket;
         }
 

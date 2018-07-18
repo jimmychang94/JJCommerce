@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Product>;
+
+<div>
+    <h4>Your Basket</h4>
+
+    @foreach(Product item in Model)
+    {
+        <p>Product: @item.Name</p>
+        <hr />
+    }
+</div>
