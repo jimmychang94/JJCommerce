@@ -16,12 +16,16 @@ namespace JandJCommerce.Controllers
         private IBasket _context;
         private SignInManager<ApplicationUser> _signInManager;
         private UserManager<ApplicationUser> _userManager;
+        private IBasketItem _item;
+        private IInventory _inventory;
 
-        public BasketController(IBasket context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public BasketController(IBasket context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IBasketItem item, IInventory inventory)
         {
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
+            _item = item;
+            _inventory = inventory;
         }
 
         //[Authorize(Policy="AdminOnly")]
@@ -36,13 +40,10 @@ namespace JandJCommerce.Controllers
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             Basket basket = await _context.GetBasketById(user);
-            if (basket == null)
+            basket.BasketItems = await _item.GetBasketItems(basket.ID);
+            foreach(BasketItem item in basket.BasketItems)
             {
-                basket = new Basket()
-                {
-                    UserID = user.Id,
-                    BasketItems = new List<BasketItem>()
-                };
+                item.Product = await _inventory.GetProductById(item.ProductID);
             }
             return View(basket);
         }
@@ -77,6 +78,26 @@ namespace JandJCommerce.Controllers
                 return NotFound();
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddToCart(int id)
+        {
+            Product product = await _inventory.GetProductById(id);
+            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            Basket basket = await _context.GetBasketById(user);
+            BasketItem basketItem = new BasketItem()
+            {
+                Product = product,
+                BasketID = basket.ID,
+                Quantity = 1
+            };
+            await _item.CreateBasketItem(basketItem);
+            return RedirectToAction("Index", "Shop");
         }
     }
 }

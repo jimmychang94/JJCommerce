@@ -14,7 +14,9 @@
         <li>Price: $@Model.Price</li>
         <li>Description: @Model.Description</li>
     </ul>
-
+    <a asp-action="AddToCart" asp-controller="Basket" asp-route-id="@Model.ID" class="btn btn-primary">
+        Add To Cart
+    </a>
 
     <div>
         <a asp-action="Index" class="nav-link">Back to all products</a>

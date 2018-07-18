@@ -22,7 +22,7 @@ namespace JandJCommerce.Models
             Configuration = configuration;
         }
 
-        public async Task<string> CreateBasket(ApplicationUser user)
+        public async Task<Basket> CreateBasket(ApplicationUser user)
         {
             Basket basket = new Basket()
             {
@@ -31,10 +31,10 @@ namespace JandJCommerce.Models
             var result = await _context.Baskets.AddAsync(basket);
             if (result == null)
             {
-                return "Basket not created";
+                return null;
             }
             await _context.SaveChangesAsync();
-            return "Basket created";
+            return basket;
         }
 
         public async Task<string> DeleteBasket(int id)
@@ -53,6 +53,14 @@ namespace JandJCommerce.Models
         public async Task<Basket> GetBasketById(ApplicationUser user)
         {
             Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id);
+            if (basket != null)
+            {
+                basket.BasketItems = await _context.BasketItems.Where(i => i.BasketID == basket.ID).ToListAsync();
+            }
+            else
+            {
+                basket = await CreateBasket(user);
+            }
             return basket;
         }
 
