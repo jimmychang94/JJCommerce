@@ -1,5 +1,6 @@
 ﻿using JandJCommerce.Data;
 using JandJCommerce.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,29 +13,31 @@ namespace JandJCommerce.Components
     public class BasketView : ViewComponent
     {
         private CommerceDbContext _context;
+        private UserManager<ApplicationUser> _userManager;
 
-        public BasketView(CommerceDbContext context)
+        public BasketView(CommerceDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(ApplicationUser user)
+        public async Task<IViewComponentResult> InvokeAsync(string userEmail)
         {
+            var user = await _userManager.FindByEmailAsync(userEmail);
             Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id);
             if (basket == null)
             {
-                basket = new Basket()
-                {
-                    UserID = user.Id,
-                    BasketItems = new List<BasketItem>()
-                };
-                await _context.Baskets.AddAsync(basket);
-                await _context.SaveChangesAsync();
-                return View(basket.BasketItems);
+                return View(new Basket());
             }
 
             List<BasketItem> basketItems = await _context.BasketItems.Where(i => i.BasketID == basket.ID).ToListAsync();
-            return View(basketItems);
+            List<string> products = new List<string>();
+            foreach (BasketItem item in basketItems)
+            {
+                Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == item.ProductID);
+                products.Add(product.Name);
+            }
+            return View(products);
         }
     }
 }

@@ -4,6 +4,10 @@
     Layout = "_Layout";
 }
 <div class="container pt-5">
+    @if (User.IsInRole(ApplicationRoles.Member))
+    {
+        @Component.InvokeAsync("BasketView", User.Identity.Name).Result
+    }
     <h3>All Products</h3>
 
     @foreach (Product product in Model)
@@ -15,7 +19,7 @@
             <li>Name: @product.Name</li>
             <li>Category: @product.Category</li>
             <li>Price: @product.Price</li>
-            <li><a asp-action="Details" asp-route-id="@product.ID" >Details</a></li>
+            <li><a asp-action="Details" asp-route-id="@product.ID">Details</a></li>
         </ul>
     }
 

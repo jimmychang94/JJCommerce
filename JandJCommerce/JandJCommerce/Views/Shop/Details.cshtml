@@ -5,6 +5,10 @@
 }
 
 <div class="container pt-5">
+    @if(User.IsInRole(ApplicationRoles.Member))
+    {
+        @Component.InvokeAsync("BasketView", User.Identity.Name).Result
+    }
 
     <h1>Details for @Model.Name</h1>
 
