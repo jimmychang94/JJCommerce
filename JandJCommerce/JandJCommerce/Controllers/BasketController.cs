@@ -57,7 +57,7 @@ namespace JandJCommerce.Controllers
             {
                 return NotFound();
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Details");
         }
 
         [HttpGet]

@@ -13,16 +13,19 @@
         @foreach (BasketItem item in basketContext.BasketItems.Where(b => b.BasketID == Model.ID))
         {
             <li>Name: @item.Product.Name</li>
-            <li>
-                <img src="@item.Product.Image" alt="Image of @item.Product.Name" />
+            <li><span class="IMGcontainer">
+                 <img src="@item.Product.Image" alt="Image of @item.Product.Name" /></span>
             </li>
             <li>Category: @item.Product.Category</li>
             <li>Price: @item.Product.Price</li>
             <li>Description: @item.Product.Description</li>
             <li>Quantity: @item.Quantity</li>
+            <li><form><button class="btn btn-danger" asp-action="Delete" asp-controller="BasketItem" asp-route-id="@item.ID" type="submit">Delete</button></form></li> 
+           
+            
         }
     </ul>
-    <h5><a asp-action=""></a></h5>
-    <a asp-action="Index" asp-controller="Home" >Back to Home Page</a>
+  
+    <a asp-action="Index" asp-controller="Home">Back to Home Page</a>
 
 </div>
