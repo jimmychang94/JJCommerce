@@ -2,3 +2,7 @@
     margin-top: 2vw;
     background-color: sandybrown;
 }
+
+ul {
+    list-style-type: none;
+}
