@@ -20,9 +20,12 @@
             <li>Price: @item.Product.Price</li>
             <li>Description: @item.Product.Description</li>
             <li>Quantity: @item.Quantity</li>
+            <li><form><button asp-action="Delete" asp-controller="BasketItem" asp-route-id="@item.ProductID" type="submit" value="@item.ProductID">Delete</button></form></li> 
+           
+            
         }
     </ul>
-    <h5><a asp-action=""></a></h5>
-    <a asp-action="Index" asp-controller="Home" >Back to Home Page</a>
+  
+    <a asp-action="Index" asp-controller="Home">Back to Home Page</a>
 
 </div>

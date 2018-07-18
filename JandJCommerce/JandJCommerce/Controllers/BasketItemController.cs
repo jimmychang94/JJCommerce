@@ -23,7 +23,7 @@ namespace JandJCommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute]int id)
         {
             string result = await _context.DeleteBasketItem(id);
 

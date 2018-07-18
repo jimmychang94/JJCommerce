@@ -34,7 +34,7 @@ namespace JandJCommerce.Models
 
         public async Task<string> DeleteBasketItem(int id)
         {
-            BasketItem basketItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.ID == id);
+            BasketItem basketItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.ProductID == id);
             if (basketItem == null)
             {
                 return "Basket Item not found";
