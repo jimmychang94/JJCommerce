@@ -41,9 +41,12 @@ namespace JandJCommerce.Controllers
             return View(basketItem);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Update(int id, BasketItem basketItem)
+        public async Task<IActionResult> Update(int id, BasketItem item)
         {
+            BasketItem basketItem = await _context.GetBasketItemById(item.ID);
+            basketItem.Quantity = item.Quantity;
             string result = await _context.UpdateBasketItem(basketItem.ID, basketItem);
 
             if (result == "Basket Not Found")
