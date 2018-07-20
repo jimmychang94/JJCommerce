@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +56,7 @@ namespace JandJCommerce
             services.AddScoped<IAuthorizationHandler, LocationHandler>();
             services.AddScoped<IBasket, DevIBasket>();
             services.AddScoped<IBasketItem, DevIBasketItem>();
+            services.AddScoped<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
