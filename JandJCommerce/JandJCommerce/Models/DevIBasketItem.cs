@@ -48,6 +48,7 @@ namespace JandJCommerce.Models
         public async Task<BasketItem> GetBasketItemById(int id)
         {
             BasketItem basketItem = await _context.BasketItems.FirstOrDefaultAsync(b => b.ID == id);
+            basketItem.Product = await _context.Products.FirstOrDefaultAsync(p => p.ID == basketItem.ProductID);
             return basketItem;
         }
 
