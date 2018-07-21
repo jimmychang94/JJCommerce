@@ -57,10 +57,6 @@ namespace JandJCommerce.Models
             {
                 basket.BasketItems = await _context.BasketItems.Where(i => i.BasketID == basket.ID).ToListAsync();
             }
-            else
-            {
-                basket = await CreateBasket(user);
-            }
             return basket;
         }
 

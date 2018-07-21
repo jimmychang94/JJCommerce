@@ -90,6 +90,11 @@ namespace JandJCommerce.Controllers
                 return RedirectToAction("Login", "User");
             }
             Basket basket = await _context.GetBasketById(user);
+            if (basket == null)
+            {
+                await _context.CreateBasket(user);
+                basket = await _context.GetBasketById(user);
+            }
             BasketItem basketItem = new BasketItem()
             {
                 Product = product,

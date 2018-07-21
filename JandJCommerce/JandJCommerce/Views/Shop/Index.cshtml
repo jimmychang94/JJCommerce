@@ -6,7 +6,7 @@
 <div class="container pt-5">
     @if (User.IsInRole(ApplicationRoles.Member))
     {
-        @Component.InvokeAsync("BasketView", User.Identity.Name).Result
+        @await Component.InvokeAsync("BasketView", User.Identity.Name)
     }
     <h3>All Products</h3>
 
