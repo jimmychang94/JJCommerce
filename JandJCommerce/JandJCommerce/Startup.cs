@@ -44,6 +44,12 @@ namespace JandJCommerce
                 .AddEntityFrameworkStores<ApplicationDbcontext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["OAuth:Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["OAuth:Authentication:Google:ClientSecret"];
+            });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Admin));
