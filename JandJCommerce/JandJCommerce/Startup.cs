@@ -44,10 +44,15 @@ namespace JandJCommerce
                 .AddEntityFrameworkStores<ApplicationDbcontext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication().AddGoogle(googleOptions =>
-            {
-                googleOptions.ClientId = Configuration["OAuth:Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = Configuration["OAuth:Authentication:Google:ClientSecret"];
+            services.AddAuthentication()
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = Configuration["OAuth:Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = Configuration["OAuth:Authentication:Google:ClientSecret"];
+                })
+            .AddMicrosoftAccount(microsoftOptions =>{
+                microsoftOptions.ClientId = Configuration["OAuth:Authentication:Microsoft:ClientId"];
+                microsoftOptions.ClientSecret = Configuration["OAuth:Authentication:Microsoft:ClientSecret"];
             });
 
             services.AddAuthorization(options =>
