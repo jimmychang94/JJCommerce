@@ -40,7 +40,16 @@ namespace JandJCommerce.Controllers
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             Basket basket = await _context.GetBasketById(user);
+            if (basket == null)
+            {
+                await _context.CreateBasket(user);
+                basket = await _context.GetBasketById(user);
+            }
             basket.BasketItems = await _item.GetBasketItems(basket.ID);
+            //if (basket.BasketItems == null)
+            //{
+            //    return RedirectToAction("Index", "Shop");
+            //}
             foreach(BasketItem item in basket.BasketItems)
             {
                 item.Product = await _inventory.GetProductById(item.ProductID);
