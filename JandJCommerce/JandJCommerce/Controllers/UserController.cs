@@ -7,6 +7,7 @@ using JandJCommerce.Models;
 using JandJCommerce.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JandJCommerce.Controllers
@@ -15,11 +16,13 @@ namespace JandJCommerce.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
+        private IEmailSender _emailSender;
 
-        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -81,6 +84,8 @@ namespace JandJCommerce.Controllers
                     }
 
                     await _signInManager.SignInAsync(user, false);
+
+                    await _emailSender.SendEmailAsync(user.Email, "Welcome to JandJCommerce!", "<p>Thank you for becoming a member of JandJCommerce!</p>");
 
                     if (await _userManager.IsInRoleAsync(user, ApplicationRoles.Admin))
                     {

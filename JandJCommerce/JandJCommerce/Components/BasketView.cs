@@ -27,17 +27,15 @@ namespace JandJCommerce.Components
             Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id);
             if (basket == null)
             {
-                return View(new Basket());
+                return View(new List<BasketItem>());
             }
 
             List<BasketItem> basketItems = await _context.BasketItems.Where(i => i.BasketID == basket.ID).ToListAsync();
-            List<string> products = new List<string>();
             foreach (BasketItem item in basketItems)
             {
-                Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == item.ProductID);
-                products.Add(product.Name);
+                item.Product = await _context.Products.FirstOrDefaultAsync(p => p.ID == item.ProductID);
             }
-            return View(products);
+            return View(basketItems);
         }
     }
 }
