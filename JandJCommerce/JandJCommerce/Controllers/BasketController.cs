@@ -19,7 +19,8 @@ namespace JandJCommerce.Controllers
         private IBasketItem _item;
         private IInventory _inventory;
 
-        public BasketController(IBasket context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IBasketItem item, IInventory inventory)
+        public BasketController(IBasket context, SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager, IBasketItem item, IInventory inventory)
         {
             _context = context;
             _signInManager = signInManager;
