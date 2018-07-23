@@ -26,10 +26,24 @@ a. We have a claim for your location to give promotions for specific locations w
 ## Policies
 We are enforcing 2 policies:  
 1. Admin Only  
-a. We are enforcing this policy because we need the ability to edit our inventory but not give access to a regular member  
+a. We are enforcing this policy because we need the ability to edit our inventory 
+but not give access to a regular member  
 (This way a random person can't "delete" all of our stock)  
 2. Location
-a. We are enforcing this policy so we can give promotions to specific locations as we our promotions only apply to certain locations  
+a. We are enforcing this policy so we can give promotions to specific locations 
+as we our promotions only apply to certain locations  
+3. Member Only  
+a. We are enforcing this policy so that only members can purchase our products.  
+
+## 3rd Party OAuth  
+Microsoft  
+Google  
+
+## Product Database Schema/Explanation  
+We have a products table to store all the products.  
+We have a basket table to store every basket made by every user in our user database.
+We have a basket item table to store the references to the products and the baskets 
+as well as hold the quantity of the product that the user wishes to buy.
 
 ## Our website:  
 Please [click here](http://jandjcommerce.azurewebsites.net/) to access our site.  
