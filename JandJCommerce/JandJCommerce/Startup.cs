@@ -33,11 +33,11 @@ namespace JandJCommerce
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CommerceDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("FurnitureConnectionDefault")));
+                    options.UseSqlServer(Configuration.GetConnectionString("FurnitureConnection")));
             services.AddMvc();
 
             services.AddDbContext<ApplicationDbcontext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("UserConnectionDefault")));
+                   options.UseSqlServer(Configuration.GetConnectionString("UserConnection")));
             services.AddMvc();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()

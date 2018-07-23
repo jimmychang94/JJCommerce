@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace JandJCommerce.Migrations.ApplicationDbcontextMigrations
+namespace JandJCommerce.Migrations
 {
-    public partial class start : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

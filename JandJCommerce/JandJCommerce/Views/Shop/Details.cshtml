@@ -5,7 +5,7 @@
 }
 
 <div class="container pt-5">
-    @if(User.IsInRole(ApplicationRoles.Member))
+    @if (User.IsInRole(ApplicationRoles.Member))
     {
         @await Component.InvokeAsync("BasketView", User.Identity.Name)
     }
@@ -13,17 +13,28 @@
     <h1>Details for @Model.Name</h1>
 
     <span class="IMGcontainer">
-        <img src="@Model.Image" alt="Image of @Model.Name" /></span>
-        <ul>
-            <li>Category: @Model.Category</li>
-            <li>Price: $@Model.Price</li>
-            <li>Description: @Model.Description</li>
-        </ul>
+        <img src="@Model.Image" alt="Image of @Model.Name" />
+    </span>
+    <ul>
+        <li>Category: @Model.Category</li>
+        <li>Price: $@Model.Price</li>
+        <li>Description: @Model.Description</li>
+    </ul>
+    @if (User.IsInRole(ApplicationRoles.Member))
+    {
         <a asp-action="AddToCart" asp-controller="Basket" asp-route-id="@Model.ID" class="btn btn-primary">
             Add To Cart
         </a>
+    }
+    else
+    {
+        <a asp-action="Login" asp-controller="User" class="btn btn-primary">
+            Add To Cart
+        </a>
+    }
 
-        <div>
-            <a asp-action="Index" class="nav-link">Back to all products</a>
-        </div>
+
+    <div>
+        <a asp-action="Index" class="nav-link">Back to all products</a>
+    </div>
 </div>

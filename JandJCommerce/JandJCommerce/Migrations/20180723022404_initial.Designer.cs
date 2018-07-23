@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace JandJCommerce.Migrations.ApplicationDbcontextMigrations
+namespace JandJCommerce.Migrations
 {
     [DbContext(typeof(ApplicationDbcontext))]
-    [Migration("20180713230243_jjm")]
-    partial class jjm
+    [Migration("20180723022404_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
