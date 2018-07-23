@@ -41,9 +41,29 @@ Google
 
 ## Product Database Schema/Explanation  
 We have a products table to store all the products.  
-We have a basket table to store every basket made by every user in our user database.
+This stores:  
+  -  Product ID  
+  -  Product Sku  
+  -  Product Name  
+  -  Product Price  
+  -  Product Image  
+  -  Product Description  
+  -  Product Category  
+
+We have a basket table to store every basket made by every user in our user database.  
+This stores:  
+  -  Basket ID  
+  -  User Id  
+  -  List of Basket Items  
+
 We have a basket item table to store the references to the products and the baskets 
-as well as hold the quantity of the product that the user wishes to buy.
+as well as hold the quantity of the product that the user wishes to buy.  
+This stores:  
+  -  Basket Item ID
+  -  Basket ID  
+  -  Product  
+  -  Product ID
+  -  Quantity  
 
 ## Our website:  
 Please [click here](http://jandjcommerce.azurewebsites.net/) to access our site.  
