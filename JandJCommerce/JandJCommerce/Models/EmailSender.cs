@@ -23,7 +23,7 @@ namespace JandJCommerce.Models
             var client = new SendGridClient(Configuration["SendGrid:API_Key"]);
 
             var msg = new SendGridMessage();
-            msg.SetFrom("admin@JJfurniture.com", "JJ Commerce Admin");
+            msg.SetFrom("admin@JJfurniture.com", "JJ Furniture Admin");
             msg.AddTo(email);
             msg.SetSubject(subject);
             msg.AddContent(MimeType.Html, htmlMessage);
