@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +44,17 @@ namespace JandJCommerce
                 .AddEntityFrameworkStores<ApplicationDbcontext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAuthentication()
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = Configuration["OAuth:Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = Configuration["OAuth:Authentication:Google:ClientSecret"];
+                })
+            .AddMicrosoftAccount(microsoftOptions =>{
+                microsoftOptions.ClientId = Configuration["OAuth:Authentication:Microsoft:ClientId"];
+                microsoftOptions.ClientSecret = Configuration["OAuth:Authentication:Microsoft:ClientSecret"];
+            });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Admin));
@@ -52,7 +64,10 @@ namespace JandJCommerce
             });
 
             services.AddScoped<IInventory, DevIInventory>();
-            services.AddSingleton<IAuthorizationHandler, LocationHandler>();
+            services.AddScoped<IAuthorizationHandler, LocationHandler>();
+            services.AddScoped<IBasket, DevIBasket>();
+            services.AddScoped<IBasketItem, DevIBasketItem>();
+            services.AddScoped<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

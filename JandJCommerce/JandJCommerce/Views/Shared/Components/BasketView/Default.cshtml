@@ -1,0 +1,13 @@
+﻿@model List<BasketItem>;
+
+<div>
+    <h4>Your Basket</h4>
+    @if(Model != null)
+    {
+        @foreach(BasketItem item in Model)
+        {
+            <p>Product: @item.Product.Name</p>
+            <hr />
+        }
+    }
+</div>

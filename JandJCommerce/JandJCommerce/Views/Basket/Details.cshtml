@@ -1,0 +1,37 @@
+﻿@model Basket;
+
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container pt-5">
+
+    <h4>Your Basket</h4>
+    <ul>
+        @foreach (BasketItem item in basketContext.BasketItems.Where(b => b.BasketID == Model.ID))
+        {
+            <li>Name: @item.Product.Name</li>
+            <li>
+                <span class="IMGcontainer">
+                    <img src="@item.Product.Image" alt="Image of @item.Product.Name" />
+                </span>
+            </li>
+            <li>Category: @item.Product.Category</li>
+            <li>Price: @item.Product.Price</li>
+            <li>Description: @item.Product.Description</li>
+            <li>Quantity: @item.Quantity</li>
+            <li>
+                <a class="btn btn-success" asp-action="Update" asp-controller="BasketItem" asp-route-id="@item.ID">Edit Order</a>
+            </li>
+            <li>
+                <a class="btn btn-danger" asp-action="Delete" asp-controller="BasketItem" asp-route-id="@item.ID">Delete</a>
+            </li>
+
+
+        }
+    </ul>
+    <a asp-action="Index" asp-controller="Checkout" class="btn btn-primary">Checkout</a>
+    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to Home Page</a>
+
+</div>

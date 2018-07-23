@@ -1,0 +1,26 @@
+﻿@model CheckoutViewModel;
+
+@{
+    Layout = "_Layout";
+}
+<div class="container pt-5">
+
+    <h2>Checkout</h2>
+
+    @foreach (var item in Model.BasketItems)
+    {
+        <div class="IMGcontainer">
+            <img src="@item.Product.Image" alt="@item.Product.Name" title="@item.Product.Name" />
+        </div>
+        <h4>@item.Product.Name</h4>
+        <h5>@item.Product.Price</h5>
+        <h5>@item.Quantity</h5>
+    }
+    <h4>Grand Total: @Model.TotalPrice</h4>
+
+    <a asp-action="Summary" class="btn btn-success">Confirm</a>
+    <a asp-action="Index" asp-controller="Shop" class="btn btn-primary">Continue Shopping</a>
+
+    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to Home Page</a>
+
+</div>
