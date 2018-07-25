@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models.ViewModels
 {
-    public class CheckoutViewModel
+    public class AdminViewModel
     {
-        public Order Order { get; set; }
+        public List<Order> Orders { get; set; }
+        public List<Product> Products { get; set; }
     }
 }

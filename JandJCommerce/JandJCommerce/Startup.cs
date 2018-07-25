@@ -33,11 +33,11 @@ namespace JandJCommerce
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CommerceDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("FurnitureConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("FurnitureConnectionDefault")));
             services.AddMvc();
 
             services.AddDbContext<ApplicationDbcontext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("UserConnection")));
+                   options.UseSqlServer(Configuration.GetConnectionString("UserConnectionDefault")));
             services.AddMvc();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -64,9 +64,10 @@ namespace JandJCommerce
             });
 
             services.AddScoped<IInventory, DevIInventory>();
-            services.AddScoped<IAuthorizationHandler, LocationHandler>();
             services.AddScoped<IBasket, DevIBasket>();
             services.AddScoped<IBasketItem, DevIBasketItem>();
+            services.AddScoped<IOrder, DevIOrder>();
+            services.AddScoped<IAuthorizationHandler, LocationHandler>();
             services.AddScoped<IEmailSender, EmailSender>();
         }
 
