@@ -33,13 +33,5 @@ namespace JandJCommerce.Controllers
             }
             return View(order);
         }
-
-        [Authorize(Policy="AdminOnly")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var result = await _order.DeleteOrder(id);
-            return RedirectToAction("Index", "Admin");
-            
-        }
     }
 }
