@@ -44,11 +44,6 @@ namespace JandJCommerce.Models
             {
                 return "Basket not found";
             }
-            basket.BasketItems = await _context.BasketItems.Where(b => b.BasketID == id).ToListAsync();
-            foreach (BasketItem item in basket.BasketItems)
-            {
-                _context.BasketItems.Remove(item);
-            }
             _context.Baskets.Remove(basket);
             await _context.SaveChangesAsync();
 

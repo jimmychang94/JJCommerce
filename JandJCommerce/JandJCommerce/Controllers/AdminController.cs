@@ -1,5 +1,6 @@
 ﻿using JandJCommerce.Models;
 using JandJCommerce.Models.Interfaces;
+using JandJCommerce.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,16 +14,20 @@ namespace JandJCommerce.Controllers
     public class AdminController : Controller
     {
         private IInventory _inventory;
+        private IOrder _order;
 
-        public AdminController(IInventory inventory)
+        public AdminController(IInventory inventory, IOrder order)
         {
             _inventory = inventory;
+            _order = order;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Product> allProducts = _inventory.GetProducts().Result;
-            return View(allProducts);
+            AdminViewModel avm = new AdminViewModel();
+            avm.Products = await _inventory.GetProducts();
+            avm.Orders = await _order.GetOrders();
+            return View(avm);
         }
     }
 }

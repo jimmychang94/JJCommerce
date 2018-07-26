@@ -1,4 +1,4 @@
-﻿@model List<Product>;
+﻿@model AdminViewModel;
 
 @{
     Layout = "_Layout";
@@ -21,18 +21,49 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Product product in Model)
+            @foreach (Product product in Model.Products)
             {
                 <tr>
                     <td>@product.ID</td>
                     <td>@product.Name</td>
                     <td>@product.Category</td>
-                    <td>@product.Price</td>
+                    <td>$@product.Price</td>
                     <td>@product.Description</td>
                     <td>@product.Sku</td>
                     <td><a asp-action="Details" asp-route-id="@product.ID" asp-controller="Product">Details</a></td>
                     <td><a asp-action="Update" asp-route-id="@product.ID" asp-controller="Product">Update</a></td>
                     <td><a asp-action="Delete" asp-route-id="@product.ID" asp-controller="Product">Delete</a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    
+    <br />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>UserID</th>
+                <th>BasketID</th>
+                <th>Number of Items Purchased</th>
+                <th>Total Price</th>
+                <th>Is Processed</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Order order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.ID</td>
+                    <td>@order.UserID</td>
+                    <td>@order.BasketID</td>
+                    <td>@order.BasketItems.Count</td>
+                    <td>$@order.TotalPrice</td>
+                    <td>@order.IsProcessed</td>
+                    <td><a asp-action="Details" asp-route-id="@order.ID" asp-controller="Order">Details</a></td>
                 </tr>
 
             }
