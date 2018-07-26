@@ -65,15 +65,20 @@ namespace JandJCommerce.Controllers
                 item.Product = await _inventory.GetProductById(item.ProductID);
             }
             order.BasketItems = basketItems;
-            return View(order);
+            CheckoutViewModel cvm = new CheckoutViewModel()
+            {
+                Order = order,
+
+            };
+            return View(cvm);
         }
 
-        public async Task<IActionResult> Summary()
+        public async Task<IActionResult> Summary(CheckoutViewModel cvm)
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             var basket = await _context.GetBasketById(user);
-            var basketItems = await _item.GetBasketItems(basket.ID);
-            var order = await _order.GetOrderByBasketId(basket.ID);
+            var order = cvm.Order;
+            var basketItems = await _item.GetBasketItems(order.BasketID);
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("<h3>Thank you for shopping with J and J Furniture</h3>");
