@@ -55,6 +55,7 @@ This stores:
   -  Basket ID  
   -  User Id  
   -  List of Basket Items  
+  -  If it is Processed  
 
 We have a basket item table to store the references to the products and the baskets 
 as well as hold the quantity of the product that the user wishes to buy.  
@@ -64,6 +65,17 @@ This stores:
   -  Product  
   -  Product ID
   -  Quantity  
+
+We have an Order table to store the orders that have come in.  
+This holds a reference to the Basket it is related to and the basket items that are being purchased.  
+This stores:  
+  -  Order ID  
+  -  List of Basket Items  
+  -  User Id  
+  -  Basket ID  
+  -  Total Price  
+  -  Date of Order  
+  -  If it is Processed  
 
 ## Our website:  
 Please [click here](http://jandjcommerce.azurewebsites.net/) to access our site.  
