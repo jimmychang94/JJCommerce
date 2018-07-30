@@ -42,7 +42,7 @@
                         </li>
 
                         <li class="navbar-item pl-3">
-                            <a asp-page="/Profile" class="nav-link">Profile Page</a>
+                            <a asp-page="/Profile" class="nav-link">Profile</a>
                         </li>
                         @if (User.Claims.FirstOrDefault(a => a.Type == ClaimTypes.StreetAddress).Value == "Seattle")
                         {
