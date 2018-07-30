@@ -52,7 +52,7 @@ namespace JandJCommerce.Models
 
         public async Task<Basket> GetBasketById(ApplicationUser user)
         {
-            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id);
+            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id && b.IsProcessed == false);
             if (basket != null)
             {
                 basket.BasketItems = await _context.BasketItems.Where(i => i.BasketID == basket.ID).ToListAsync();

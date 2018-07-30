@@ -11,6 +11,7 @@ namespace JandJCommerce.Models.Interfaces
         Task<Order> GetOrderByBasketId(int basketID);
         Task<Order> GetOrderById(int id);
         Task<List<Order>> GetOrders();
+        Task<List<Order>> GetOrdersByUserID(string userID);
         Task<string> DeleteOrder(int id);
         Task<string> UpdateOrder(int id, Order order);
     }

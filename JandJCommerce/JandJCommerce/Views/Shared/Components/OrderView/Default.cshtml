@@ -1,0 +1,37 @@
+﻿@model List<OrderViewModel>;
+
+@{ 
+    Layout = "_Layout";
+    var count = 1;
+}
+
+<div class="container pt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>User</th>
+                <th>Date Purchased</th>
+                <th>Number of Items Purchased</th>
+                <th>Total Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (OrderViewModel ovm in Model)
+            {
+                <tr>
+                    <td>@count</td>
+                    <td>@ovm.UserName</td>
+                    <td>@ovm.Order.OrderDate</td>
+                    <td>@ovm.Order.BasketItems.Count</td>
+                    <td>$@ovm.Order.TotalPrice</td>
+                    <td><a asp-action="Details" asp-route-id="@ovm.Order.ID" asp-controller="Order">Details</a></td>
+                </tr>
+                count++;
+            }
+        </tbody>
+    </table>
+
+
+</div>

@@ -41,7 +41,7 @@ namespace JandJCommerce.Controllers
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             Basket basket = await _context.GetBasketById(user);
-            if (basket == null)
+            if (basket == null || basket.IsProcessed == true)
             {
                 await _context.CreateBasket(user);
                 basket = await _context.GetBasketById(user);
@@ -100,7 +100,7 @@ namespace JandJCommerce.Controllers
                 return RedirectToAction("Login", "User");
             }
             Basket basket = await _context.GetBasketById(user);
-            if (basket == null)
+            if (basket == null || basket.IsProcessed == true)
             {
                 await _context.CreateBasket(user);
                 basket = await _context.GetBasketById(user);

@@ -47,7 +47,7 @@ namespace JandJCommerce.Controllers
             var basket = await _context.GetBasketById(user);
             var basketItems = await _item.GetBasketItems(basket.ID);
             var order = await _order.GetOrderByBasketId(basket.ID);
-            if (order == null)
+            if (order == null || order.IsProcessed == true)
             {
                 order = new Order
                 {
@@ -62,13 +62,15 @@ namespace JandJCommerce.Controllers
                 }
                 order.BasketItems = basketItems;
                 await _order.CreateOrder(order);
-                return View(order);
             }
-            foreach (BasketItem item in basketItems)
+            else
             {
-                item.Product = await _inventory.GetProductById(item.ProductID);
+                foreach (BasketItem item in basketItems)
+                {
+                    item.Product = await _inventory.GetProductById(item.ProductID);
+                }
+                order.BasketItems = basketItems;
             }
-            order.BasketItems = basketItems;
             CheckoutViewModel cvm = new CheckoutViewModel()
             {
                 Order = order,
@@ -115,6 +117,7 @@ namespace JandJCommerce.Controllers
             order.BasketItems = basketItems;
             basket.IsProcessed = true;
             order.IsProcessed = true;
+            order.OrderDate = DateTime.Today;
             var update = await _order.UpdateOrder(order.ID, order);
 
             if (update == "Order Not Found")
@@ -128,7 +131,7 @@ namespace JandJCommerce.Controllers
             stringBuilder.Append("<h6>We would be honored to have you visit again!</h6>");
             string msg = stringBuilder.ToString();
 
-            await _emailSender.SendEmailAsync(user.Email, "J and J Furniture Receipt", msg);
+            //await _emailSender.SendEmailAsync(user.Email, "J and J Furniture Receipt", msg);
             
             await _context.UpdateBasket(basket.ID, basket);
             return View(order);
