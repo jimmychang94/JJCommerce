@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace JandJCommerce.Migrations.CommerceDb
+namespace JandJCommerce.Migrations
 {
-    public partial class initial : Migration
+    public partial class initail : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,11 +13,28 @@ namespace JandJCommerce.Migrations.CommerceDb
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserID = table.Column<string>(nullable: true)
+                    UserID = table.Column<string>(nullable: true),
+                    IsProcessed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Baskets", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserID = table.Column<string>(nullable: true),
+                    BasketID = table.Column<int>(nullable: false),
+                    TotalPrice = table.Column<decimal>(nullable: false),
+                    IsProcessed = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,7 +63,8 @@ namespace JandJCommerce.Migrations.CommerceDb
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BasketID = table.Column<int>(nullable: false),
                     ProductID = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
+                    Quantity = table.Column<int>(nullable: false),
+                    OrderID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -57,6 +75,12 @@ namespace JandJCommerce.Migrations.CommerceDb
                         principalTable: "Baskets",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BasketItems_Orders_OrderID",
+                        column: x => x.OrderID,
+                        principalTable: "Orders",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BasketItems_Products_ProductID",
                         column: x => x.ProductID,
@@ -88,6 +112,11 @@ namespace JandJCommerce.Migrations.CommerceDb
                 column: "BasketID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BasketItems_OrderID",
+                table: "BasketItems",
+                column: "OrderID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BasketItems_ProductID",
                 table: "BasketItems",
                 column: "ProductID");
@@ -100,6 +129,9 @@ namespace JandJCommerce.Migrations.CommerceDb
 
             migrationBuilder.DropTable(
                 name: "Baskets");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
