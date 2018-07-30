@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace JandJCommerce.Controllers
 {
@@ -23,9 +24,11 @@ namespace JandJCommerce.Controllers
         private IOrder _order;
         private IInventory _inventory;
         private IEmailSender _emailSender;
+        private IConfiguration Configuration;
+
 
         public CheckoutController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-            IBasket context, IBasketItem item, IOrder order, IInventory inventory, IEmailSender emailSender)
+            IBasket context, IBasketItem item, IOrder order, IInventory inventory, IEmailSender emailSender, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -34,6 +37,7 @@ namespace JandJCommerce.Controllers
             _order = order;
             _inventory = inventory;
             _emailSender = emailSender;
+            Configuration = configuration;
         }
 
 
@@ -72,8 +76,12 @@ namespace JandJCommerce.Controllers
                 Order = order,
 
             };
+
+           
             return View(cvm);
         }
+
+
 
         public async Task<IActionResult> Summary(CheckoutViewModel cvm)
         {
@@ -81,6 +89,10 @@ namespace JandJCommerce.Controllers
             var basket = await _context.GetBasketById(user);
             var order = await _order.GetOrderByBasketId(basket.ID);
             var basketItems = await _item.GetBasketItems(order.BasketID);
+
+            ChargeCreditCard creditCharge = new ChargeCreditCard(Configuration);
+            creditCharge.RunCard();
+            ///credit card logic goes here somewhere---
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("<h3>Thank you for shopping with J and J Furniture</h3>");

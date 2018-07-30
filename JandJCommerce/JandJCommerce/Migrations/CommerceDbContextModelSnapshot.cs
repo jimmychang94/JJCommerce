@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace JandJCommerce.Migrations.CommerceDb
+namespace JandJCommerce.Migrations
 {
     [DbContext(typeof(CommerceDbContext))]
     partial class CommerceDbContextModelSnapshot : ModelSnapshot
