@@ -131,7 +131,7 @@ namespace JandJCommerce.Controllers
             stringBuilder.Append("<h6>We would be honored to have you visit again!</h6>");
             string msg = stringBuilder.ToString();
 
-            //await _emailSender.SendEmailAsync(user.Email, "J and J Furniture Receipt", msg);
+            await _emailSender.SendEmailAsync(user.Email, "J and J Furniture Receipt", msg);
             
             await _context.UpdateBasket(basket.ID, basket);
             return View(order);
