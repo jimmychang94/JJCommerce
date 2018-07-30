@@ -133,7 +133,7 @@ namespace JandJCommerce.Controllers
             creditCharge.RunCard(cvm);
 
             
-            //await _emailSender.SendEmailAsync(user.Email, "J and J Furniture Receipt", msg);
+            await _emailSender.SendEmailAsync(user.Email, "J and J Furniture Receipt", msg);
 
             await _context.UpdateBasket(basket.ID, basket);
             return View(order);
