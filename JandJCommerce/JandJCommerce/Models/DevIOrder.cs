@@ -71,6 +71,10 @@ namespace JandJCommerce.Models
                 return null;
             }
             order.BasketItems = await _context.BasketItems.Where(i => i.BasketID == order.BasketID).ToListAsync();
+            foreach(BasketItem item in order.BasketItems)
+            {
+                item.Product = await _context.Products.FirstOrDefaultAsync(p => p.ID == item.ProductID);
+            }
             return order;
         }
 
@@ -100,6 +104,24 @@ namespace JandJCommerce.Models
             await _context.SaveChangesAsync();
 
             return "Update Successful";
+        }
+
+        public async Task<List<Order>> GetOrdersByUserID(string userID)
+        {
+            List<Order> orders = await _context.Orders.Where(o => o.UserID == userID).OrderByDescending(o => o.ID).Take(3).ToListAsync();
+            if (orders == null)
+            {
+                return null;
+            }
+            foreach(Order order in orders)
+            {
+                order.BasketItems = await _context.BasketItems.Where(i => i.BasketID == order.BasketID).ToListAsync();
+                foreach(BasketItem item in order.BasketItems)
+                {
+                    item.Product = await _context.Products.FirstOrDefaultAsync(p => p.ID == item.ProductID);
+                }
+            }
+            return orders;
         }
     }
 }

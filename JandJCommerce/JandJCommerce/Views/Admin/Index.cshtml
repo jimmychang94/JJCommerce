@@ -47,6 +47,7 @@
                 <th>ID</th>
                 <th>UserID</th>
                 <th>BasketID</th>
+                <th>Date Purchased</th>
                 <th>Number of Items Purchased</th>
                 <th>Total Price</th>
                 <th>Is Processed</th>
@@ -60,10 +61,11 @@
                     <td>@order.ID</td>
                     <td>@order.UserID</td>
                     <td>@order.BasketID</td>
+                    <td>@order.OrderDate</td>
                     <td>@order.BasketItems.Count</td>
                     <td>$@order.TotalPrice</td>
                     <td>@order.IsProcessed</td>
-                    <td><a asp-action="Details" asp-route-id="@order.ID" asp-controller="Order">Details</a></td>
+                    <td><a asp-action="DetailsAdmin" asp-route-id="@order.ID" asp-controller="Order">Details</a></td>
                 </tr>
 
             }

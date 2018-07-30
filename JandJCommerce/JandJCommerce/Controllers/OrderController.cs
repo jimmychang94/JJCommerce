@@ -33,5 +33,17 @@ namespace JandJCommerce.Controllers
             }
             return View(order);
         }
+
+        [Authorize(Policy = "AdminOnly")]
+        public async Task<IActionResult> DetailsAdmin(int id)
+        {
+            var order = await _order.GetOrderById(id);
+            order.BasketItems = await _item.GetBasketItems(order.BasketID);
+            foreach (BasketItem item in order.BasketItems)
+            {
+                item.Product = await _inventory.GetProductById(item.ProductID);
+            }
+            return View(order);
+        }
     }
 }

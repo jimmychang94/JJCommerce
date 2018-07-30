@@ -8,6 +8,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <h4>Hello @User.Claims.First(c => c.Type == "FullName").Value</h4>
+        @await Component.InvokeAsync("OrderView", User.Identity.Name)
     }
     else
     {

@@ -13,6 +13,6 @@ namespace JandJCommerce.Models
         public int BasketID { get; set; }
         public decimal TotalPrice { get; set; }
         public bool IsProcessed { get; set; }
-
+        public DateTime OrderDate { get; set; }
     }
 }
