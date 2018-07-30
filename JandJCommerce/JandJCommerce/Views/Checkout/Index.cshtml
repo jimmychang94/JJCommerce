@@ -6,19 +6,54 @@
 <div class="container pt-5">
 
     <h2>Checkout</h2>
+    <form asp-action="Summary" method="post">
 
-    @foreach (var item in Model.BasketItems)
-    {
-        <div class="IMGcontainer">
-            <img src="@item.Product.Image" alt="@item.Product.Name" title="@item.Product.Name" />
+        <div class="form-group row">
+            <h6 class="col-sm-2 offset-sm-1"><label asp-for="FirstName" class="col-form-label"></label></h6>
+            <div class="col-sm-9">
+                <input asp-for="FirstName" class="form-control" value="@Model.FirstName" />
+            </div>
         </div>
-        <h4>@item.Product.Name</h4>
-        <h5>@item.Product.Price</h5>
-        <h5>@item.Quantity</h5>
-    }
-    <h4>Grand Total: @Model.TotalPrice</h4>
 
-    <a asp-action="Summary" class="btn btn-success">Confirm</a>
+        <div class="form-group row">
+            <h6 class="col-sm-2 offset-sm-1"><label asp-for="LastName" class="col-form-label"></label></h6>
+            <div class="col-sm-9">
+                <input asp-for="LastName" class="form-control" value="@Model.LastName" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <h6 class="col-sm-2 offset-sm-1"><label asp-for="Street" class="col-form-label"></label></h6>
+            <div class="col-sm-9">
+                <input asp-for="Street" class="form-control" value="@Model.Street" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <h6 class="col-sm-2 offset-sm-1"><label asp-for="City" class="col-form-label"></label></h6>
+            <div class="col-sm-9">
+                <input asp-for="City" class="form-control" value="@Model.City" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <select asp-for="Card" class="form-control custom-select" asp-items="Html.GetEnumSelectList<CardType>()" value="@Model.Card"></select>
+            <span asp-validation-for="Card" class="text-danger"></span>
+        </div>
+
+        @foreach (var item in Model.Order.BasketItems)
+        {
+            <div class="IMGcontainer">
+                <img src="@item.Product.Image" alt="@item.Product.Name" title="@item.Product.Name" />
+            </div>
+            <h4>@item.Product.Name</h4>
+            <h5>@item.Product.Price</h5>
+            <h5>@item.Quantity</h5>
+        }
+        <h4>Grand Total: @Model.Order.TotalPrice</h4>
+
+        <button type="submit" class="btn btn-success">Confirm</button>
+    </form>
     <a asp-action="Index" asp-controller="Shop" class="btn btn-primary">Continue Shopping</a>
 
     <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to Home Page</a>

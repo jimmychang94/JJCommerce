@@ -1,0 +1,47 @@
+﻿@model Order;
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container pt-5">
+
+    <h1>Details for Order @Model.ID</h1>
+
+    <ul>
+        <li>Basket ID: @Model.BasketID</li>
+        <li>User ID: @Model.UserID</li>
+        <li>Date Purchased: @Model.OrderDate</li>
+        <li>Is Processed: @Model.IsProcessed</li>
+        <li>Total Price: $@Model.TotalPrice</li>
+    </ul>
+
+    @foreach (BasketItem item in Model.BasketItems)
+    {
+        <p>@item.Product.Name</p>
+        <img src="@item.Product.Image" alt="Image of @item.Product.Name" />
+        <table class="table">
+            <tr>
+                <td>ID: @item.Product.ID</td>
+            </tr>
+            <tr>
+                <td>Category: @item.Product.Category</td>
+            </tr>
+            <tr>
+                <td>Price: $@item.Product.Price</td>
+            </tr>
+            <tr>
+                <td>Description: @item.Product.Description</td>
+            </tr>
+            <tr>
+                <td>Sku: @item.Product.Sku</td>
+            </tr>
+            <tr>
+                <td>Quantity Bought: @item.Quantity</td>
+            </tr>
+        </table>
+
+
+    }
+
+</div>

@@ -44,11 +44,6 @@ namespace JandJCommerce.Models
             {
                 return "Basket not found";
             }
-            basket.BasketItems = await _context.BasketItems.Where(b => b.BasketID == id).ToListAsync();
-            foreach (BasketItem item in basket.BasketItems)
-            {
-                _context.BasketItems.Remove(item);
-            }
             _context.Baskets.Remove(basket);
             await _context.SaveChangesAsync();
 
@@ -57,7 +52,7 @@ namespace JandJCommerce.Models
 
         public async Task<Basket> GetBasketById(ApplicationUser user)
         {
-            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id);
+            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id && b.IsProcessed == false);
             if (basket != null)
             {
                 basket.BasketItems = await _context.BasketItems.Where(i => i.BasketID == basket.ID).ToListAsync();

@@ -24,7 +24,7 @@ namespace JandJCommerce.Components
         public async Task<IViewComponentResult> InvokeAsync(string userEmail)
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
-            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id);
+            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id && b.IsProcessed == false);
             if (basket == null)
             {
                 return View(new List<BasketItem>());

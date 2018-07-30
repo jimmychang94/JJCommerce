@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace JandJCommerce.Controllers
 {
@@ -20,18 +21,23 @@ namespace JandJCommerce.Controllers
         private UserManager<ApplicationUser> _userManager;
         private IBasket _context;
         private IBasketItem _item;
+        private IOrder _order;
         private IInventory _inventory;
         private IEmailSender _emailSender;
+        private IConfiguration Configuration;
+
 
         public CheckoutController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-            IBasket context, IBasketItem item, IInventory inventory, IEmailSender emailSender)
+            IBasket context, IBasketItem item, IOrder order, IInventory inventory, IEmailSender emailSender, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _context = context;
             _item = item;
+            _order = order;
             _inventory = inventory;
             _emailSender = emailSender;
+            Configuration = configuration;
         }
 
 
@@ -40,25 +46,49 @@ namespace JandJCommerce.Controllers
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             var basket = await _context.GetBasketById(user);
             var basketItems = await _item.GetBasketItems(basket.ID);
-            CheckoutViewModel cvm = new CheckoutViewModel();
-            cvm.TotalPrice = 0;
-            foreach (BasketItem item in basketItems)
+            var order = await _order.GetOrderByBasketId(basket.ID);
+            if (order == null || order.IsProcessed == true)
             {
-                item.Product = await _inventory.GetProductById(item.ProductID);
-                cvm.TotalPrice += item.Product.Price * item.Quantity;
+                order = new Order
+                {
+                    UserID = user.Id,
+                    BasketID = basket.ID,
+                    TotalPrice = 0
+                };
+                foreach (BasketItem item in basketItems)
+                {
+                    item.Product = await _inventory.GetProductById(item.ProductID);
+                    order.TotalPrice += item.Product.Price * item.Quantity;
+                }
+                order.BasketItems = basketItems;
+                await _order.CreateOrder(order);
             }
-            cvm.BasketItems = basketItems;
+            else
+            {
+                foreach (BasketItem item in basketItems)
+                {
+                    item.Product = await _inventory.GetProductById(item.ProductID);
+                }
+                order.BasketItems = basketItems;
+            }
+            CheckoutViewModel cvm = new CheckoutViewModel()
+            {
+                Order = order,
 
+            };
+
+           
             return View(cvm);
         }
 
-        public async Task<IActionResult> Summary()
+
+
+        public async Task<IActionResult> Summary(CheckoutViewModel cvm)
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             var basket = await _context.GetBasketById(user);
-            var basketItems = await _item.GetBasketItems(basket.ID);
-            CheckoutViewModel cvm = new CheckoutViewModel();
-            cvm.TotalPrice = 0;
+            var order = await _order.GetOrderByBasketId(basket.ID);
+            var basketItems = await _item.GetBasketItems(order.BasketID);
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("<h3>Thank you for shopping with J and J Furniture</h3>");
@@ -70,7 +100,6 @@ namespace JandJCommerce.Controllers
             {
                 item.Product = await _inventory.GetProductById(item.ProductID);
                 decimal productTotal = item.Product.Price * item.Quantity;
-                cvm.TotalPrice += productTotal;
                 stringBuilder.Append("<li>");
                 stringBuilder.Append("<ul>");
                 stringBuilder.Append($"<li>Name: {item.Product.Name}</li>");
@@ -81,18 +110,33 @@ namespace JandJCommerce.Controllers
                 stringBuilder.Append("</li>");
             }
 
-            cvm.BasketItems = basketItems;
+            order.BasketItems = basketItems;
+            basket.IsProcessed = true;
+            order.IsProcessed = true;
+            order.OrderDate = DateTime.Today;
+            cvm.Order = order;
+            var update = await _order.UpdateOrder(order.ID, order);
+
+            if (update == "Order Not Found")
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             stringBuilder.Append("</ol>");
-            stringBuilder.Append($"<p>Grand Total: {cvm.TotalPrice}</p>");
+            stringBuilder.Append($"<p>Grand Total: {order.TotalPrice}</p>");
             stringBuilder.Append("<h5>Thank you for shopping with us!</h5>");
             stringBuilder.Append("<h6>We would be honored to have you visit again!</h6>");
             string msg = stringBuilder.ToString();
 
+
+            ChargeCreditCard creditCharge = new ChargeCreditCard(Configuration);
+            creditCharge.RunCard(cvm);
+
+            
             await _emailSender.SendEmailAsync(user.Email, "J and J Furniture Receipt", msg);
 
-            await _context.DeleteBasket(basket.ID);
-            return View(cvm);
+            await _context.UpdateBasket(basket.ID, basket);
+            return View(order);
         }
     }
 }

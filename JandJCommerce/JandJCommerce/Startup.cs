@@ -64,9 +64,10 @@ namespace JandJCommerce
             });
 
             services.AddScoped<IInventory, DevIInventory>();
-            services.AddScoped<IAuthorizationHandler, LocationHandler>();
             services.AddScoped<IBasket, DevIBasket>();
             services.AddScoped<IBasketItem, DevIBasketItem>();
+            services.AddScoped<IOrder, DevIOrder>();
+            services.AddScoped<IAuthorizationHandler, LocationHandler>();
             services.AddScoped<IEmailSender, EmailSender>();
         }
 

@@ -10,5 +10,6 @@ namespace JandJCommerce.Models
         public int ID { get; set; }
         public string UserID { get; set; }
         public List<BasketItem> BasketItems { get; set; }
+        public bool IsProcessed { get; set; } = false;
     }
 }
