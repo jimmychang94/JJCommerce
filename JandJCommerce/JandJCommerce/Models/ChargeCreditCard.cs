@@ -7,6 +7,7 @@ using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts;
 using AuthorizeNet.Api.Contracts.V1;
 using Microsoft.Extensions.Configuration;
+using JandJCommerce.Models.ViewModels;
 
 namespace JandJCommerce.Models
 {
@@ -20,7 +21,7 @@ namespace JandJCommerce.Models
             Configuration = configuration;
         }
 
-        public ANetApiResponse RunCard()
+        public ANetApiResponse RunCard(CheckoutViewModel cvm)
         {
 
             //make sure it's running in the sandbox environment//
@@ -35,12 +36,12 @@ namespace JandJCommerce.Models
                 Item = Configuration["Authorize:ApiTransactionKey"]
             };
 
-
+            long cardNumber = (long)cvm.Card;
             //Temp credit card to use for tests
             var creditCard = new creditCardType
             {
-                cardNumber = "4111111111111111",
-                expirationDate = "0827",
+                cardNumber = cardNumber.ToString(),
+                expirationDate = "0918",
                 cardCode = "123"
             };
 
@@ -48,26 +49,37 @@ namespace JandJCommerce.Models
             //address to refactor
             var billingAddress = new customerAddressType
             {
-                firstName = "John",
-                lastName = "Doe",
-                address = "123 my st",
-                city = "town",
+                firstName = cvm.FirstName,
+                lastName = cvm.LastName,
+                address = cvm.Street,
+                city = cvm.City,
                 zip = "98119"
             };
 
             //Add line Items orders //
-
+            lineItemType[] MakeLineItems = new lineItemType[cvm.Order.BasketItems.Count];
+            for (int i = 0; i < MakeLineItems.Length; i++)
+            {
+                MakeLineItems[i] = new lineItemType
+                {
+                    itemId = cvm.Order.BasketItems[i].Product.ID.ToString(),
+                    name = cvm.Order.BasketItems[i].Product.Name,
+                    quantity = cvm.Order.BasketItems[i].Quantity,
+                    unitPrice = cvm.Order.BasketItems[i].Product.Price
+                };
+            }
 
             //standard api call to recieve response 
             var paymentType = new paymentType { Item = creditCard };
 
             var transactionRequest = new transactionRequestType
             {
-                transactionType = transactionTypeEnum.authCaptureContinueTransaction.ToString(),
+                transactionType = transactionTypeEnum.authCaptureTransaction.ToString(),
 
-                amount = 99.99M,
+                amount = cvm.Order.TotalPrice,
                 payment = paymentType,
                 billTo = billingAddress,
+                lineItems = MakeLineItems
             };
 
             var request = new createTransactionRequest { transactionRequest = transactionRequest };

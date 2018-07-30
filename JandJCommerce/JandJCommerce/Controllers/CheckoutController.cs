@@ -90,10 +90,6 @@ namespace JandJCommerce.Controllers
             var order = await _order.GetOrderByBasketId(basket.ID);
             var basketItems = await _item.GetBasketItems(order.BasketID);
 
-            ChargeCreditCard creditCharge = new ChargeCreditCard(Configuration);
-            creditCharge.RunCard();
-            ///credit card logic goes here somewhere---
-
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("<h3>Thank you for shopping with J and J Furniture</h3>");
             stringBuilder.Append("<h4>Here is a receipt of your purchases</h4>");
@@ -118,6 +114,7 @@ namespace JandJCommerce.Controllers
             basket.IsProcessed = true;
             order.IsProcessed = true;
             order.OrderDate = DateTime.Today;
+            cvm.Order = order;
             var update = await _order.UpdateOrder(order.ID, order);
 
             if (update == "Order Not Found")
@@ -131,8 +128,13 @@ namespace JandJCommerce.Controllers
             stringBuilder.Append("<h6>We would be honored to have you visit again!</h6>");
             string msg = stringBuilder.ToString();
 
-            //await _emailSender.SendEmailAsync(user.Email, "J and J Furniture Receipt", msg);
+
+            ChargeCreditCard creditCharge = new ChargeCreditCard(Configuration);
+            creditCharge.RunCard(cvm);
+
             
+            //await _emailSender.SendEmailAsync(user.Email, "J and J Furniture Receipt", msg);
+
             await _context.UpdateBasket(basket.ID, basket);
             return View(order);
         }
