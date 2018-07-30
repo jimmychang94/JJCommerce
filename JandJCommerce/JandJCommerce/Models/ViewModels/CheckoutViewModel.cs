@@ -24,10 +24,6 @@ namespace JandJCommerce.Models.ViewModels
         [Display(Name = "City")]
         public string City { get; set; }
 
-        [Display(Name = "State")]
-        [MaxLength(2)]
-        public string State { get; set; }
-
         [Display(Name = "Credit Card")]
         public CardType Card { get; set; }
 

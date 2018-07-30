@@ -37,10 +37,8 @@
         </div>
 
         <div class="form-group row">
-            <h6 class="col-sm-2 offset-sm-1"><label asp-for="State" class="col-form-label"></label></h6>
-            <div class="col-sm-9">
-                <input asp-for="State" class="form-control" value="@Model.State" />
-            </div>
+            <select asp-for="Card" class="form-control custom-select" asp-items="Html.GetEnumSelectList<CardType>()" value="@Model.Card"></select>
+            <span asp-validation-for="Card" class="text-danger"></span>
         </div>
 
         @foreach (var item in Model.Order.BasketItems)
