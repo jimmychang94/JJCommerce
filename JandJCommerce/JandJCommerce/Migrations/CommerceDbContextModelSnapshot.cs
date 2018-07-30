@@ -4,16 +4,14 @@ using JandJCommerce.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace JandJCommerce.Migrations.CommerceDb
+namespace JandJCommerce.Migrations
 {
     [DbContext(typeof(CommerceDbContext))]
-    [Migration("20180724231615_OrderTable")]
-    partial class OrderTable
+    partial class CommerceDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,6 +24,8 @@ namespace JandJCommerce.Migrations.CommerceDb
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsProcessed");
 
                     b.Property<string>("UserID");
 
