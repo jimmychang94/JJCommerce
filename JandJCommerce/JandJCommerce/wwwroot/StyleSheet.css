@@ -1,6 +1,6 @@
 ﻿body {
     margin-top: 2vw;
-    background-color: sandybrown;
+    background-color: orange;
 }
 
 ul {
@@ -12,3 +12,6 @@ ul {
     border-radius: 8px;
 }
 
+a {
+    color: blue;
+}
