@@ -3,28 +3,31 @@
 @{
     Layout = "_Layout";
 }
+<div class="container pt-5">
 
-<h2>Edit @Model.Product.Name</h2>
-<div>
-    <span class="IMGcontainer">
-        <img src="@Model.Product.Image" alt="Image of @Model.Product.Name" />
-    </span>
+    <h2>Edit @Model.Product.Name</h2>
+    <div>
+        <span class="IMGcontainer">
+            <img src="@Model.Product.Image" alt="Image of @Model.Product.Name" />
+        </span>
+    </div>
+    <p>Category: @Model.Product.Category</p>
+    <p>Price: @Model.Product.Price</p>
+    <p>Description: @Model.Product.Description</p>
+    <p>Current Quantity: @Model.Quantity</p>
+
+    <form asp-action="Update" method="post">
+        <select class="form-control col-sm-1" asp-for="@Model.Quantity">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+        <br />
+        <button asp-action="Update" asp-controller="BasketItem" class="btn btn-primary">Update Quanitity</button>
+    </form>
+
 </div>
-<p>Category: @Model.Product.Category</p>
-<p>Price: @Model.Product.Price</p>
-<p>Description: @Model.Product.Description</p>
-<p>Current Quantity: @Model.Quantity</p>
-
-<form asp-action="Update" method="post">
-    <select asp-for="@Model.Quantity">
-        <option value="1" selected>1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-    </select>
-    <button asp-action="Update" asp-controller="BasketItem">Update Quanitity</button>
-</form>
-

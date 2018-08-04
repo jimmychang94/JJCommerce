@@ -42,16 +42,17 @@
 
         if (loginProviders.Count > 0)
         {
-            <div class="col-sm-2">
+            <br />
+            <div class="col-sm-9 offset-sm-3">
                 <div class="row">
                     <form asp-action="ExternalLogin" method="post">
                       @foreach (var provider in loginProviders)
                       {
-                          <button type="submit" class="btn" name="provider" value="@provider.Name" title="Log in with @provider.DisplayName">@provider.Name</button>
-
+                          <button type="submit" class="btn btn-success" name="provider" value="@provider.Name" title="Log in with @provider.DisplayName">@provider.Name</button>
+                          <br />
+                          <br />
                       }
-
-</form>
+                    </form>
                 </div>
             </div>
         }

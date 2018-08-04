@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models.ViewModels
 {
+    /// <summary>
+    /// This class holds information besides the order which we need to process the order 
+    /// but it is sensitive information we don't want to store.
+    /// </summary>
     public class CheckoutViewModel
     {
-
-
         public Order Order { get; set; }
 
         [Display(Name = "First Name")]

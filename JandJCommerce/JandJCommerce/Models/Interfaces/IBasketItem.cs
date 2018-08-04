@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models.Interfaces
 {
+    /// <summary>
+    /// This sets up the methods to interact with the basket items
+    /// </summary>
     public interface IBasketItem
     {
         Task<string> CreateBasketItem(BasketItem basketItem);

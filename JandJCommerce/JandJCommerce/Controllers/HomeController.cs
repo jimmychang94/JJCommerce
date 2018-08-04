@@ -27,17 +27,32 @@ namespace JandJCommerce.Controllers
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// This sends the user to the home page
+        /// Anyone can access this page.
+        /// </summary>
+        /// <returns>The home page</returns>
         public IActionResult Index ()
         {
             return View();
         }
 
+        /// <summary>
+        /// This is our local discounts for Seattlites
+        /// It has a policy where only people who put their location as "Seattle" can have access to it.
+        /// </summary>
+        /// <returns>The local discount page</returns>
         [Authorize(Policy = "Seattle")]
         public IActionResult Seattle()
         {
             return View();
         }
 
+        /// <summary>
+        /// Nothing is here but catz
+        /// Careful, they have learned about the interwebz
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Policy = "Cat")]
         public async Task<IActionResult> Cat()
         {

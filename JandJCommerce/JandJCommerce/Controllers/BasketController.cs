@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JandJCommerce.Controllers
 {
-    //[Authorize(Policy ="MemberOnly")]
+    // This policy makes sure that anyone who accesses this controller is a member
+    [Authorize(Policy ="MemberOnly")]
     public class BasketController : Controller
     {
         private IBasket _context;
@@ -28,90 +29,69 @@ namespace JandJCommerce.Controllers
             _item = item;
             _inventory = inventory;
         }
-
-        //[Authorize(Policy="AdminOnly")]
-        public async Task<IActionResult> Index()
-        {
-            List<Basket> baskets = await _context.GetBaskets();
-            return View(baskets);
-        }
-
+        
+        /// <summary>
+        /// This gets the unprocessed basket associated with the specific user.
+        /// </summary>
+        /// <returns>The view of the details page</returns>
         [HttpGet]
         public async Task<IActionResult> Details()
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             Basket basket = await _context.GetBasketById(user);
+
+            // This logic makes sure that if the user accesses this page without a basket or with only processed baskets
+            // That a basket is created for them and they are assigned that basket.
             if (basket == null || basket.IsProcessed == true)
             {
                 await _context.CreateBasket(user);
                 basket = await _context.GetBasketById(user);
             }
             basket.BasketItems = await _item.GetBasketItems(basket.ID);
-            //if (basket.BasketItems == null)
-            //{
-            //    return RedirectToAction("Index", "Shop");
-            //}
-            foreach(BasketItem item in basket.BasketItems)
+
+            foreach (BasketItem item in basket.BasketItems)
             {
                 item.Product = await _inventory.GetProductById(item.ProductID);
             }
             return View(basket);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(int id)
-        {
-            string result = await _context.DeleteBasket(id);
-
-            if (result == "Basket Not Found")
-            {
-                return NotFound();
-            }
-            return RedirectToAction("Details");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Update()
-        {
-            var user = await _userManager.FindByEmailAsync(User.Identity.Name);
-            Basket basket = await _context.GetBasketById(user);
-            return View(basket);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Update(int id, Basket basket)
-        {
-            string result = await _context.UpdateBasket(basket.ID, basket);
-
-            if (result == "Basket Not Found")
-            {
-                return NotFound();
-            }
-            return RedirectToAction("Index");
-        }
-
+        /// <summary>
+        /// This method takes in an id and adds the product associated with that id as a basket item.
+        /// It then adds that basket item to the basket.
+        /// </summary>
+        /// <param name="id">The id of the product</param>
+        /// <returns>The shop page</returns>
         [HttpGet]
         public async Task<IActionResult> AddToCart(int id)
         {
+            // This gets the product associated with the id
             Product product = await _inventory.GetProductById(id);
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            // The above checks to see if the user is logged in, and if not then they are redirected to the login page.
             if (user == null)
             {
                 return RedirectToAction("Login", "User");
             }
+
             Basket basket = await _context.GetBasketById(user);
+            // If the user doesn't have a basket that is unprocessed then they get a basket created for them and then retrieved.
             if (basket == null || basket.IsProcessed == true)
             {
                 await _context.CreateBasket(user);
                 basket = await _context.GetBasketById(user);
             }
+
+            // This creates the new basket item and relates it to the user's basket.
             BasketItem basketItem = new BasketItem()
             {
                 Product = product,
+                ProductID = product.ID,
                 BasketID = basket.ID,
                 Quantity = 1
             };
             await _item.CreateBasketItem(basketItem);
+
             return RedirectToAction("Index", "Shop");
         }
     }

@@ -12,24 +12,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JandJCommerce.Controllers
 {
+    /// <summary>
+    /// This is the login and register for the user. 
+    /// It also holds the ability to login through a 3rd party OAuth. It is open to everyone.
+    /// </summary>
     public class UserController : Controller
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
         private IEmailSender _emailSender;
 
-        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender)
+        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, 
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+        /// <summary>
+        /// This sends the user to the register page
+        /// </summary>
+        /// <returns>the register view page</returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
@@ -37,13 +41,20 @@ namespace JandJCommerce.Controllers
             return View(new RegisterViewModel());
         }
 
+        /// <summary>
+        /// This takes what put into the registration and creates a user.
+        /// It uses that information to create claims for the user.
+        /// It sends an email to thank the user for registering for our site.
+        /// It then logs the user into the site and redirects them to the index page
+        /// </summary>
+        /// <param name="rvm">The information to be put into the new user</param>
+        /// <returns>The home page</returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
             if(ModelState.IsValid)
             {
-                //make list of claims to then add too later
                 List<Claim> userClaims = new List<Claim>();
 
                 var user = new ApplicationUser
@@ -97,6 +108,10 @@ namespace JandJCommerce.Controllers
             return View(rvm);
         }
 
+        /// <summary>
+        /// This shows the login page
+        /// </summary>
+        /// <returns>The login page</returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
@@ -104,6 +119,13 @@ namespace JandJCommerce.Controllers
             return View(new LoginViewModel());
         }
 
+        /// <summary>
+        /// This takes the information that was put in and checks to see if the information is valid
+        /// If it is the user is logged in and sent to the home page
+        /// If it isn't they are sent back to the login page
+        /// </summary>
+        /// <param name="lvm">The login information</param>
+        /// <returns>The home page or the login page</returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel lvm)
@@ -134,6 +156,10 @@ namespace JandJCommerce.Controllers
             return View(lvm);
         }
 
+        /// <summary>
+        /// This logs the user out and redirects them to the home page.
+        /// </summary>
+        /// <returns>The home page</returns>
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -142,7 +168,11 @@ namespace JandJCommerce.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-       
+       /// <summary>
+       /// This adds the option to login through an external provider.
+       /// </summary>
+       /// <param name="provider"></param>
+       /// <returns></returns>
         public IActionResult ExternalLogin(string provider)
         {
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "User");
@@ -150,7 +180,14 @@ namespace JandJCommerce.Controllers
             return Challenge(properties, provider);
         }
 
-
+        /// <summary>
+        /// This first checks to see if there is an error
+        /// Then it checks to see if the external provider gave information back on the user
+        /// Next we check to see if the user has an account with us
+        /// If they do, we sign them in, otherwise they get sent to our login page to fill out some extra information.
+        /// </summary>
+        /// <param name="remoteError"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string remoteError = null)
@@ -181,7 +218,13 @@ namespace JandJCommerce.Controllers
             return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
         }
 
-
+        /// <summary>
+        /// This is where the user is sent if they created a new account from the external login.
+        /// It also adds claims, sends them an email, and logs them in
+        /// </summary>
+        /// <param name="elvm">This is the extra information we grabbed from the external login</param>
+        /// <returns>The home page</returns>
+        [HttpPost]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel elvm)
         {
             if (ModelState.IsValid)
@@ -227,9 +270,7 @@ namespace JandJCommerce.Controllers
                     }
 
                     result = await _userManager.AddLoginAsync(user, info);
-
-
-
+                    
                     if (result.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);

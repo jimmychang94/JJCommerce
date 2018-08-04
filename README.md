@@ -78,7 +78,14 @@ This stores:
   -  If it is Processed  
 
 ## Our website:  
-Please [click here](http://jandjcommerce.azurewebsites.net/) to access our site.  
+Please [click here](https://jjcommerce.azurewebsites.net/) to access our site.  
 If that doesn't work, go to: 
-http://jandjcommerce.azurewebsites.net/  
+https://jjcommerce.azurewebsites.net/  
 and you will be brought to the same place.  
+
+## Vulnerabilty Report  
+Our vulnerability report can be found [here](Vulnerability-Report.md)  
+
+## Contributors
+Jimmy Chang  
+Judah Hunger  

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models
 {
+    /// <summary>
+    /// This holds the properties that are in basket items.
+    /// </summary>
     public class BasketItem
     {
         public int ID { get; set; }
