@@ -12,10 +12,11 @@
         <li>Date Purchased: @Model.OrderDate</li>
         <li>Total Price: $@Model.TotalPrice</li>
     </ul>
+    <br />
 
     @foreach(BasketItem item in Model.BasketItems)
     {
-        <p>@item.Product.Name</p>
+        <h5>@item.Product.Name</h5>
         <span class="IMGcontainer">
             <img src="@item.Product.Image" alt="Image of @item.Product.Name" />
         </span>
@@ -36,7 +37,7 @@
                 <td>Quantity Bought: @item.Quantity</td>
             </tr>
         </table>
-
+        <br />
 
     }
 

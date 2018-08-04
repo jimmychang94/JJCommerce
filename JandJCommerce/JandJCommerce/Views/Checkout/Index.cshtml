@@ -3,7 +3,7 @@
 @{
     Layout = "_Layout";
 }
-<div class="container pt-5">
+<div class="container pt-5 pb-5">
 
     <h2>Checkout</h2>
     <form asp-action="Summary" method="post">
@@ -37,8 +37,11 @@
         </div>
 
         <div class="form-group row">
-            <select asp-for="Card" class="form-control custom-select" asp-items="Html.GetEnumSelectList<CardType>()" value="@Model.Card"></select>
-            <span asp-validation-for="Card" class="text-danger"></span>
+            <h6 class="col-sm-2 offset-sm-1"><label asp-for="Card" class="col-form-label"></label></h6>
+            <div class="col-sm-9">
+                <select asp-for="Card" class="form-control custom-select" asp-items="Html.GetEnumSelectList<CardType>()" value="@Model.Card"></select>
+                <span asp-validation-for="Card" class="text-danger"></span>
+            </div>
         </div>
 
         @foreach (var item in Model.Order.BasketItems)
@@ -55,7 +58,8 @@
         <button type="submit" class="btn btn-success">Confirm</button>
     </form>
     <a asp-action="Index" asp-controller="Shop" class="btn btn-primary">Continue Shopping</a>
-
+    <br />
+    <br />
     <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to Home Page</a>
 
 </div>

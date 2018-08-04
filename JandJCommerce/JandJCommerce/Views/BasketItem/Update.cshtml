@@ -17,7 +17,7 @@
     <p>Current Quantity: @Model.Quantity</p>
 
     <form asp-action="Update" method="post">
-        <select class="form-control" asp-for="@Model.Quantity">
+        <select class="form-control col-sm-1" asp-for="@Model.Quantity">
             <option value="1" selected>1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -26,7 +26,8 @@
             <option value="6">6</option>
             <option value="7">7</option>
         </select>
-        <button asp-action="Update" asp-controller="BasketItem">Update Quanitity</button>
+        <br />
+        <button asp-action="Update" asp-controller="BasketItem" class="btn btn-primary">Update Quanitity</button>
     </form>
 
 </div>
