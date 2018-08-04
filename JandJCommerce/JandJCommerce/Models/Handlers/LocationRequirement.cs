@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models.Handlers
 {
+    /// <summary>
+    /// This sets the location requirement
+    /// </summary>
     public class LocationRequirement : IAuthorizationRequirement
     {
         public string Location { get; set; }

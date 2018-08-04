@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models
 {
+    /// <summary>
+    /// This class holds all the methods that are used to interact with the basket table
+    /// </summary>
     public class DevIBasket : IBasket
     {
         public CommerceDbContext _context { get; }
@@ -37,19 +40,6 @@ namespace JandJCommerce.Models
             return basket;
         }
 
-        public async Task<string> DeleteBasket(int id)
-        {
-            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.ID == id);
-            if (basket == null)
-            {
-                return "Basket not found";
-            }
-            _context.Baskets.Remove(basket);
-            await _context.SaveChangesAsync();
-
-            return "Basket Removed";
-        }
-
         public async Task<Basket> GetBasketById(ApplicationUser user)
         {
             Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id && b.IsProcessed == false);
@@ -58,12 +48,6 @@ namespace JandJCommerce.Models
                 basket.BasketItems = await _context.BasketItems.Where(i => i.BasketID == basket.ID).ToListAsync();
             }
             return basket;
-        }
-
-        public async Task<List<Basket>> GetBaskets()
-        {
-            List<Basket> baskets = await _context.Baskets.ToListAsync();
-            return baskets;
         }
 
         public async Task<string> UpdateBasket(int id, Basket basket)

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models
 {
+    /// <summary>
+    /// This is how we initialize the user database with roles
+    /// </summary>
     public class StartupDbInitializer
     {
         private static readonly List<IdentityRole> Roles = new List<IdentityRole>()
@@ -46,27 +49,5 @@ namespace JandJCommerce.Models
                 dbcontext.SaveChanges();
             }
         }
-
-        //private static async void AddUser(ApplicationDbcontext dbcontext, UserManager<ApplicationUser> userManager)
-        //{
-        //    if (dbcontext.Users.Any()) return;
-        //    ApplicationUser admin = new ApplicationUser()
-        //    {
-        //        UserName = "Admin",
-        //        Email = "furnitureAdmin@JJfurniture.com",
-        //    };
-        //    // I want to be able to add this to the user secrets; not sure how to right now
-        //    string password = "@JJCommerce2";
-        //    await userManager.AddPasswordAsync(admin, password);
-        //    await userManager.CreateAsync(admin, password);
-        //}
-
-        //// I was trying to get this to work but couldn't think up how to finish it this way.
-        //private static async void AddUserRoles(ApplicationDbcontext dbcontext)
-        //{
-        //    if (dbcontext.UserRoles.Any()) return;
-        //    var admin = await dbcontext.Users.FirstOrDefaultAsync(s => s.UserName == "Admin");
-        //    await 
-        //}
     }
 }

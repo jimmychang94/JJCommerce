@@ -22,14 +22,21 @@ namespace JandJCommerce.Components
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// This finds the first 3 orders of the user and returns it in a view component
+        /// </summary>
+        /// <param name="userEmail">This is how we determine which user we are accessing</param>
+        /// <returns>The component view</returns>
         public async Task<IViewComponentResult> InvokeAsync(string userEmail)
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
+            // We are accessing the IOrder interface instead of the database directly so we can use the built in methods of the interface.
             var orders = await _context.GetOrdersByUserID(user.Id);
             if (orders == null)
             {
                 return View();
             }
+            // We send the orders through an order view model since there is more information that we want to grab than what is just in the database.
             List<OrderViewModel> ovms = new List<OrderViewModel>();
             foreach(Order order in orders)
             {

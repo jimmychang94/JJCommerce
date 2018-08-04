@@ -15,9 +15,12 @@ namespace JandJCommerce.Data
 
         }
 
+        /// <summary>
+        /// This is how we seed our product database with initial products
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        
             modelBuilder.Entity<Product>().HasData(
                 new
                 {

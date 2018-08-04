@@ -6,7 +6,7 @@
 
 <div class="container pt-5">
 
-    <h1>Details for Order @Model.ID</h1>
+    <h2>Details for Your Order</h2>
 
     <ul>
         <li>Date Purchased: @Model.OrderDate</li>
@@ -16,11 +16,10 @@
     @foreach(BasketItem item in Model.BasketItems)
     {
         <p>@item.Product.Name</p>
-        <img src="@item.Product.Image" alt="Image of @item.Product.Name" />
+        <span class="IMGcontainer">
+            <img src="@item.Product.Image" alt="Image of @item.Product.Name" />
+        </span>
         <table class="table">
-            <tr>
-                <td>ID: @item.Product.ID</td>
-            </tr>
             <tr>
                 <td>Category: @item.Product.Category</td>
             </tr>

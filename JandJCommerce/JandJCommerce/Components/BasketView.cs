@@ -21,15 +21,22 @@ namespace JandJCommerce.Components
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// This runs the component which shows the user's current basket.
+        /// This makes sure that the user is accessing a basket which has not been processed yet.
+        /// </summary>
+        /// <param name="userEmail">This is how we determine which user it is.</param>
+        /// <returns>The component view</returns>
         public async Task<IViewComponentResult> InvokeAsync(string userEmail)
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
+            // The additional search for the IsProcessed == false is what makes sure that the basket has not been processed yet.
             Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == user.Id && b.IsProcessed == false);
             if (basket == null)
             {
                 return View(new List<BasketItem>());
             }
-
+            //This call and the calls in the foreach make sure that there are actual basket items with products to display.
             List<BasketItem> basketItems = await _context.BasketItems.Where(i => i.BasketID == basket.ID).ToListAsync();
             foreach (BasketItem item in basketItems)
             {

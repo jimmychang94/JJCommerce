@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models.Interfaces
 {
+    /// <summary>
+    /// This creates the methods that interact with the baskets
+    /// </summary>
     public interface IBasket
     {
         Task<Basket> CreateBasket(ApplicationUser user);
         Task<Basket> GetBasketById(ApplicationUser user);
-        Task<List<Basket>> GetBaskets();
         Task<string> UpdateBasket(int id, Basket basket);
-        Task<string> DeleteBasket(int id);
     }
 }
