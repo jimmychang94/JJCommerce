@@ -11,6 +11,9 @@ using JandJCommerce.Models.ViewModels;
 
 namespace JandJCommerce.Models
 {
+    /// <summary>
+    /// This is the class that charges the user's credit card
+    /// </summary>
     public class ChargeCreditCard
     {
 
@@ -21,6 +24,11 @@ namespace JandJCommerce.Models
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// This is the method that charges the user's credit card.
+        /// </summary>
+        /// <param name="cvm">The information we use to charge the credit card</param>
+        /// <returns>The response from the api</returns>
         public ANetApiResponse RunCard(CheckoutViewModel cvm)
         {
 

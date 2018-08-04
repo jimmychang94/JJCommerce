@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models.Interfaces
 {
+    /// <summary>
+    /// This sets up the methods to interact with the products
+    /// </summary>
     public interface IInventory
     {
         Task<string> CreateProduct(Product product);

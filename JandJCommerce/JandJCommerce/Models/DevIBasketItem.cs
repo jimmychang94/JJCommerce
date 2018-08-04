@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models
 {
+    /// <summary>
+    /// This holds all the methods of how we interact with the basket item database table.
+    /// </summary>
     public class DevIBasketItem : IBasketItem
     {
         public CommerceDbContext _context { get; }

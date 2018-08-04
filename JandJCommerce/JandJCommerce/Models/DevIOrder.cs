@@ -32,27 +32,6 @@ namespace JandJCommerce.Models
             return "Basket Item created";
         }
 
-        public async Task<string> DeleteOrder(int id)
-        {
-            Order order = await _context.Orders.FirstOrDefaultAsync(o => o.ID == id);
-            if (order == null)
-            {
-                return "Order not found";
-            }
-            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.ID == order.BasketID);
-            List<BasketItem> basketItems = await _context.BasketItems.Where(i => i.BasketID == order.BasketID).ToListAsync();
-            foreach (BasketItem item in basketItems)
-            {
-                _context.BasketItems.Remove(item);
-            }
-            _context.Baskets.Remove(basket);
-            _context.Orders.Remove(order);
-            
-            await _context.SaveChangesAsync();
-
-            return "Order Removed";
-        }
-
         public async Task<Order> GetOrderByBasketId(int basketID)
         {
             Order order = await _context.Orders.FirstOrDefaultAsync(o => o.BasketID == basketID);
@@ -108,7 +87,8 @@ namespace JandJCommerce.Models
 
         public async Task<List<Order>> GetOrdersByUserID(string userID)
         {
-            List<Order> orders = await _context.Orders.Where(o => o.UserID == userID).OrderByDescending(o => o.ID).Take(3).ToListAsync();
+            List<Order> orders = await _context.Orders.Where(o => o.UserID == userID)
+                                                      .OrderByDescending(o => o.ID).Take(3).ToListAsync();
             if (orders == null)
             {
                 return null;

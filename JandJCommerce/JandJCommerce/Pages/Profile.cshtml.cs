@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace JandJCommerce.Pages
 {   
+    /// <summary>
+    /// This makes sure the user is logged in to view this page.
+    /// It also allows us to manage the profile page from here rather than a controller.
+    /// </summary>
     [Authorize]
     public class ProfileModel : PageModel
     {
@@ -37,7 +41,7 @@ namespace JandJCommerce.Pages
 
         }
 
-        public async void OnGet()
+        public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
 
@@ -45,7 +49,7 @@ namespace JandJCommerce.Pages
             LastName = user.LastName;
             Location = user.Location;
             Email = user.Email;
-
+            return Page();
         }
 
         public async Task<IActionResult> OnPost()

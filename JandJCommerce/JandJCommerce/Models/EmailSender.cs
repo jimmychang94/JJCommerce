@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace JandJCommerce.Models
 {
+    /// <summary>
+    /// This is how we can send emails to the users
+    /// </summary>
     public class EmailSender : IEmailSender
     {
         public IConfiguration Configuration { get; }

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models
 {
+    /// <summary>
+    /// This holds all of our properties for each product
+    /// </summary>
     public class Product
     {
         public int ID { get; set; }

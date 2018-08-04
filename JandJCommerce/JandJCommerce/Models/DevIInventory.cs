@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace JandJCommerce.Models
 {
+    /// <summary>
+    /// This holds all of the methods that we use to interact with the products (inventory) database table.
+    /// </summary>
     public class DevIInventory : IInventory
     {
         private CommerceDbContext _context { get; }

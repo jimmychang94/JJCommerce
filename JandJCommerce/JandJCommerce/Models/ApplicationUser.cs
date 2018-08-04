@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models
 {
+    /// <summary>
+    /// This holds the extra information we want to store about the user
+    /// </summary>
     public class ApplicationUser : IdentityUser
     {
         public string FirstName { get; set; }
@@ -15,6 +18,9 @@ namespace JandJCommerce.Models
         public string Location { get; set; }
     }
 
+    /// <summary>
+    /// This stores the roles that the user can be in
+    /// </summary>
     public static class ApplicationRoles
     {
         public const string Member = "Member";

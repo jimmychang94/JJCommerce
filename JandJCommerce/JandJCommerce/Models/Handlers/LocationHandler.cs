@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace JandJCommerce.Models.Handlers
 {
+    /// <summary>
+    /// This class creates the functionality behind the location policy.
+    /// </summary>
     public class LocationHandler : AuthorizationHandler<LocationRequirement>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, LocationRequirement requirement)
